@@ -103,7 +103,7 @@ func ReceivePrepare(prepareRequest messages.GenericMessage) messages.GenericMess
 
 	// building response message
 	result := messages.GenericMessage{
-		TurnID: turnID,             // turn_id
+		TurnID: turnID,            // turn_id
 		Type:   "accept_response", // just debug info
 		Body: messages.Body{
 			Message:  response, // either "retry" or "promise"

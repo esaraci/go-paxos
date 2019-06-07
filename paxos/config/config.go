@@ -6,6 +6,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"time"
 )
 
@@ -34,7 +35,7 @@ func (c *Conf) LoadConfigFile(fn string) {
 
 	yamlFile, err := ioutil.ReadFile(fn)
 	if err != nil {
-		log.Fatalf("yamlFile.Get err   #%v ", err)
+		log.Fatalf("yamlFile.Get err %v ", err)
 	}
 	err = yaml.Unmarshal(yamlFile, c)
 	if err != nil {
@@ -47,7 +48,7 @@ func (c *Conf) LoadConfigFile(fn string) {
 func (c *Conf) FillEmptyFields() {
 
 	if c.PID == 0 {
-		c.PID = c.PORT
+		c.PID = rand.Intn(10000)
 	}
 
 	if c.V_DEFAULT == "" {

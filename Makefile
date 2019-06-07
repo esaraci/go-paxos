@@ -4,5 +4,5 @@ build:
 
 release: build
 	zip release.zip node_controller main config.yaml
-	tar cvzf release.tar.gz node_controller main config.yaml
-	rm node_controller main 
+	tar -czf release.tar.gz node_controller main config.yaml
+	rm node_controller main

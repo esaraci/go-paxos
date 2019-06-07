@@ -14,6 +14,7 @@ const (
 	sqlDriver = "sqlite3"
 )
 
+// InitDatabase executes the command needed to initialize the database.
 func InitDatabase() {
 	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
 	_, _ = conn.Exec(`BEGIN TRANSACTION;

@@ -13,7 +13,9 @@
 
 # Compiled go files
 main
+paxos
 node_controller
 release.zip
 release.tar.gz
 *.db
+todo.go

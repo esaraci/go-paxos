@@ -17,7 +17,7 @@ type Conf struct {
 	CONTROLLER_PORT int `yaml:"controller_port"` // CONTROLLER_PORT defines the TCP port the controller will be listening to.
 }
 
-const paxosCmd = "./main"
+const paxosCmd = "./paxos"
 
 var paxosProc *exec.Cmd
 

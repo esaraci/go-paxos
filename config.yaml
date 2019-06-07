@@ -1,14 +1,15 @@
 db_path       : ./database.db
-pid           : 2222
-v_default     : arch@2222
+pid           :
+v_default     :
 port          : 2222
 manual_mode   : true
 timeout       : 2
 seek_timeout  : 30
 quorum        : 
 nodes:
-  - http://127.0.0.1:2222
-  - http://127.0.0.1:3333
-  - http://127.0.0.1:4444
-  - http://127.0.0.1:5555
+  - http://35.238.95.169:2222
+  - http://46.101.141.5:2222
+  - http://35.188.167.83:2222
+  - http://142.93.165.135:2222
+  - http://35.222.219.113:2222
 controller_port: 2221
