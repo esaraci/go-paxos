@@ -1,0 +1,130 @@
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=89
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T105152.200.txt
+
+###
+
+GET http://localhost:8080/learner/get_learnt_value?pid=11&seq=89
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=89
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104752.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104744.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104623.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104622.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104621.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104607-2.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104607-1.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104607.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104606.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104605.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104555.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104546.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-04T104507.200.txt
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/acceptor/receive_prepare?pid=11&seq=88
+Accept: */*
+Cache-Control: no-cache
+
+###
+

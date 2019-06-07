@@ -1,0 +1,27 @@
+language: go
+
+go: "1.12.x"
+
+install:
+  - export GOPATH=$HOME/gopath
+  - export TRAVIS_BUILD_DIR=$HOME/gopath/src/go-paxos
+  - cd $HOME/gopath/src
+  - mv github.com/esaraci/go-paxos ./
+  - cd go-paxos
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ${GITHUBOAUTHTOKEN}
+  file: 
+    - release.tar.gz
+    - release.zip
+  skip_cleanup: true
+  on:
+    tags: true
+
+script: make release
+
+
+notifications:
+  email: false
