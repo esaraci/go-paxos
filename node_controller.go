@@ -135,14 +135,21 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	go exec.Command(updateCmd)
+	updateProc := exec.Command(updateCmd)
+	err = updateProc.Start()
+
+	status := "updating"
+
+	if err != nil {
+		status = err.Error()
+	}
 
 	// adding response headers
 	paxos.EnableCors(&w)
 	paxos.AddContentTypeJson(&w)
 
 	// json encoding
-	_, _ = fmt.Fprint(w, "rur")
+	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s\" }", status)
 }
 
 // LoadConfigFile loads the config '.yaml' file onto the callee Conf object.

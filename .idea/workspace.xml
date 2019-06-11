@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/node_controller.go" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
@@ -43,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="295" selection-start-line="295" selection-end-line="318" selection-end-column="55" />
+            <state relative-caret-position="540">
+              <caret line="371" column="13" lean-forward="true" selection-start-line="371" selection-start-column="13" selection-end-line="371" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -52,17 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/node_controller.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="138" column="4" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/paxos/seeker.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1950">
-              <caret line="140" column="2" selection-start-line="140" selection-start-column="2" selection-end-line="140" selection-end-column="2" />
+            <state relative-caret-position="300">
+              <caret line="140" column="15" lean-forward="true" selection-start-line="140" selection-start-column="15" selection-end-line="140" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -619,13 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/go/src/os/exec/exec.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="350" column="14" selection-start-line="350" selection-start-column="14" selection-end-line="350" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/log.txt" />
     <entry file="file://$PROJECT_DIR$/&amp;1" />
     <entry file="file:///usr/lib/go/src/log/log.go">
@@ -772,17 +755,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/lib/go/src/os/exec/exec.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-477">
+          <caret line="163" column="5" selection-start-line="163" selection-start-column="5" selection-end-line="163" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="295" selection-start-line="295" selection-end-line="318" selection-end-column="55" />
+        <state relative-caret-position="540">
+          <caret line="371" column="13" lean-forward="true" selection-start-line="371" selection-start-column="13" selection-end-line="371" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_controller.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="138" column="4" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="4" />
+        <state relative-caret-position="300">
+          <caret line="140" column="15" lean-forward="true" selection-start-line="140" selection-start-column="15" selection-end-line="140" selection-end-column="15" />
         </state>
       </provider>
     </entry>
