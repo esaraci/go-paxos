@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"go-paxos/paxos"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -18,6 +20,7 @@ type Conf struct {
 }
 
 const paxosCmd = "./main"
+const updateCmd = "./updater.sh"
 
 var paxosProc *exec.Cmd
 
@@ -109,6 +112,39 @@ func startServiceHandler(w http.ResponseWriter, _ *http.Request) {
 
 }
 
+// updateServiceHandler listens for the github webhook
+func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
+	// Read body
+	b, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	type updateRequestMessage struct {
+		Action string `json:"action"`
+	}
+
+	//log.Print(string(b))
+	//Unmarshal POST body
+	updateRequest := updateRequestMessage{}
+	err = json.Unmarshal(b, &updateRequest)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	go exec.Command(updateCmd)
+
+	// adding response headers
+	paxos.EnableCors(&w)
+	paxos.AddContentTypeJson(&w)
+
+	// json encoding
+	_, _ = fmt.Fprint(w, "rur")
+}
+
 // LoadConfigFile loads the config '.yaml' file onto the callee Conf object.
 func (c *Conf) LoadConfigFile(fn string) {
 
@@ -148,6 +184,7 @@ func main() {
 	http.HandleFunc("/status", statusServiceHandler)
 	http.HandleFunc("/stop", stopServiceHandler)
 	http.HandleFunc("/start", startServiceHandler)
+	http.HandleFunc("/update", updateServiceHandler)
 
 	log.Printf("[CTRL] -> Serving node controller on port %d.", CONF.CONTROLLER_PORT)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(CONF.CONTROLLER_PORT), nil))
