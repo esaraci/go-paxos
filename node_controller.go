@@ -126,7 +126,6 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 		Action string `json:"action"`
 	}
 
-	//log.Print(string(b))
 	//Unmarshal POST body
 	updateRequest := updateRequestMessage{}
 	err = json.Unmarshal(b, &updateRequest)
@@ -135,13 +134,19 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	updateProc := exec.Command(updateCmd)
-	err = updateProc.Start()
-
-	status := "updating"
-
-	if err != nil {
-		status = err.Error()
+	var status string
+	if updateRequest.Action == "published" {
+		log.Print("[CTRL] -> Receiving valid update request.")
+		updateProc := exec.Command(updateCmd)
+		err = updateProc.Start()
+		status = "updating"
+		if err != nil {
+			log.Print("[CTRL] -> Error when executing update script.")
+			status = err.Error()
+		}
+	} else {
+		log.Print("[CTRL] -> Received update request is NOT valid.")
+		status = "failed"
 	}
 
 	// adding response headers
