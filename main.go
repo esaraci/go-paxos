@@ -10,6 +10,7 @@ import (
 	"go-paxos/paxos/queries"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
@@ -450,7 +451,7 @@ func welcomeHandler(w http.ResponseWriter, _ *http.Request) {
 	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s\" }", "GoLang implementation of the Paxos Algorithm.")
 }
 
-// info handles GET requests to route /info and returns a string containing the execution mode and the language this client is written in.
+// info handles GET requests to route /info and returns a string containing the execution mode, the PID of the node, and the language this client is written in.
 func infoHandler(w http.ResponseWriter, _ *http.Request) {
 	language := "golang"
 	var mode string
@@ -466,7 +467,7 @@ func infoHandler(w http.ResponseWriter, _ *http.Request) {
 	paxos.AddContentTypeJson(&w)
 
 	// json encoding
-	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s@%s\" }", language, mode)
+	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s@%s@%d\" }", language, mode, config.CONF.PID)
 }
 
 // seek4ever triggers a seek request every x seconds. The amount of seconds can be changed in the '.yaml' file.
@@ -482,6 +483,7 @@ func seek4ever() {
 
 func init() {
 
+	rand.Seed(time.Now().UTC().UnixNano())
 	configPath := "./config.yaml"
 
 	// config path can be specified as an argument from command line
@@ -507,6 +509,9 @@ func init() {
 		// file does exist but it's a folder, exit and ask the user to change the filename.
 		log.Fatalf("[ERROR] -> %s is a folder. The database has NOT been created. Change filename and retry.", config.CONF.DB_PATH)
 	}
+
+	// now i certainly have a db file.
+	queries.PrepareDBConn()
 }
 
 func main() {

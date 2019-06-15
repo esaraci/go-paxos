@@ -14,10 +14,15 @@ const (
 	sqlDriver = "sqlite3"
 )
 
+var db *sql.DB
+
+func PrepareDBConn() {
+	db, _ = sql.Open(sqlDriver, config.CONF.DB_PATH)
+}
+
 // InitDatabase executes the command needed to initialize the database.
 func InitDatabase() {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, _ = conn.Exec(`BEGIN TRANSACTION;
+	_, _ = db.Exec(`BEGIN TRANSACTION;
 	CREATE TABLE IF NOT EXISTS "learnt" (
 		"turn_id"	INTEGER,
 		"value"	TEXT,
@@ -32,6 +37,7 @@ func InitDatabase() {
 	);
 	COMMIT;`)
 }
+
 
 /*
 # ========================================================= #
@@ -48,8 +54,8 @@ func InitDatabase() {
 // The entry will be mapped onto a proposal.Proposal object.
 func GetProposal(turnID int) (proposal.Proposal, bool) {
 
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	row := conn.QueryRow("SELECT pid, seq, value FROM proposal WHERE turn_id = ?", turnID)
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	row := db.QueryRow("SELECT pid, seq, value FROM proposal WHERE turn_id = ?", turnID)
 
 	// sql.NullInt64, sql.NullString are "NULL-accepting" types
 	var pid sql.NullInt64
@@ -79,10 +85,11 @@ func GetProposal(turnID int) (proposal.Proposal, bool) {
 // GetAllProposals returns a list of all the entries stored in the 'proposal' table.
 // Each entry is mapped onto a messages.ProposalWithTid object.
 func GetAllProposals() []messages.ProposalWithTid {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := conn.Query("SELECT * FROM proposal ORDER BY turn_id")
+
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, err := db.Query("SELECT * FROM proposal ORDER BY turn_id")
 	if err != nil {
-		log.Print("ERR rilevato in conn.Query - ", err.Error())
+		log.Print("ERR rilevato in db.Query - ", err.Error())
 	}
 
 	var m []messages.ProposalWithTid
@@ -112,21 +119,22 @@ func GetAllProposals() []messages.ProposalWithTid {
 // If isAcceptRequest is false, only the value "n" (i.e. Pid and Seq) will be overwritten, while "v" will be left untouched.
 // If isAcceptRequest is true, both "v" and "n" will be overwritten by the value requested.
 func SetProposal(turnID int, p proposal.Proposal, isAcceptRequest bool) (err error) {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
 	if p.V != "" {
 		if isAcceptRequest {
 			// is accept request
-			_, err = conn.Exec("INSERT INTO proposal VALUES(?, ?, ?, ?) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq, value = excluded.value", turnID, p.Pid, p.Seq, p.V)
+			_, err = db.Exec("INSERT INTO proposal VALUES(?, ?, ?, ?) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq, value = excluded.value", turnID, p.Pid, p.Seq, p.V)
 		} else {
 			// is prepare request with non empty V. If the stored value is not NULL it will not be overwritten.
 			// coalesce returns the first non null argument passed to it.
-			_, err = conn.Exec("INSERT INTO proposal VALUES(?, ?, ?, ?) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq, value = coalesce(value, excluded.value)", turnID, p.Pid, p.Seq, p.V)
+			_, err = db.Exec("INSERT INTO proposal VALUES(?, ?, ?, ?) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq, value = coalesce(value, excluded.value)", turnID, p.Pid, p.Seq, p.V)
 		}
 
 	} else {
 		// this can only be a prepare request, V is always non empty in accept requests
 		// this query prevents emptystring to be saved as V
-		_, err = conn.Exec("INSERT INTO proposal VALUES(?, ?, ?, NULL) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq", turnID, p.Pid, p.Seq)
+		_, err = db.Exec("INSERT INTO proposal VALUES(?, ?, ?, NULL) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq", turnID, p.Pid, p.Seq)
 
 	}
 	return err
@@ -134,23 +142,23 @@ func SetProposal(turnID int, p proposal.Proposal, isAcceptRequest bool) (err err
 
 // ResetProposal deletes the entry from the 'proposal' table where the field 'turn_id' is equal to @turnID.
 func ResetProposal(turnID int) error {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := conn.Exec("DELETE FROM proposal WHERE turn_id = ?", turnID)
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	_, err := db.Exec("DELETE FROM proposal WHERE turn_id = ?", turnID)
 	return err
 }
 
 // ResetAllProposals empties the `proposal` table.
 func ResetAllProposals() error {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := conn.Exec("DELETE FROM proposal")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	_, err := db.Exec("DELETE FROM proposal")
 	return err
 }
 
 // GetProposalsTurnID is a map used as a set, the keys are the turnIDs of the proposals we know.
 // map[int]interface{} is said to be more efficient than map[int]bool, doesn't really matter.
 func GetProposalsTurnID() *map[int]bool {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, _ := conn.Query("SELECT turn_id FROM proposal ORDER BY turn_id ASC")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, _ := db.Query("SELECT turn_id FROM proposal ORDER BY turn_id ASC")
 
 	proposalsTurnID := make(map[int]bool)
 
@@ -172,10 +180,10 @@ func GetProposalsTurnID() *map[int]bool {
 // The map uses the turn ID as the key and a Proposal object as the value.
 func GetDanglingProposals() *map[int]proposal.Proposal {
 
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := conn.Query("SELECT p.turn_id, p.pid, p.seq, p.value FROM proposal as p LEFT JOIN learnt as l ON p.turn_id = l.turn_id WHERE l.turn_id is NULL")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, err := db.Query("SELECT p.turn_id, p.pid, p.seq, p.value FROM proposal as p LEFT JOIN learnt as l ON p.turn_id = l.turn_id WHERE l.turn_id is NULL")
 	if err != nil {
-		log.Print("ERR rilevato in conn.Query - ", err.Error())
+		log.Print("ERR rilevato in db.Query - ", err.Error())
 	}
 
 	danglingProposals := make(map[int]proposal.Proposal)
@@ -207,8 +215,8 @@ func GetDanglingProposals() *map[int]proposal.Proposal {
 // GetLearntValue returns the 'v' field of the 'learnt' table where the field 'turn_id' is equal to @turnID.
 // If no value has been learnt for the requested @turnID, an empty string is returned.
 func GetLearntValue(turnID int) string {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	row := conn.QueryRow("SELECT value FROM learnt WHERE turn_id = ?", turnID)
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	row := db.QueryRow("SELECT value FROM learnt WHERE turn_id = ?", turnID)
 
 	var v sql.NullString
 	err := row.Scan(&v)
@@ -223,34 +231,34 @@ func GetLearntValue(turnID int) string {
 // If the requested @turnID does not exist, a new entry is created.
 // If the learnt value for the requested @turnID is already present, it will be overwritten.
 func SetLearntValue(turnID int, v string) (err error) {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err = conn.Exec("INSERT INTO learnt VALUES(?, ?) ON CONFLICT (turn_id) DO UPDATE SET value = excluded.value", turnID, v)
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	_, err = db.Exec("INSERT INTO learnt VALUES(?, ?) ON CONFLICT (turn_id) DO UPDATE SET value = excluded.value", turnID, v)
 
 	return err
 }
 
 // ResetLearntValue deletes the entry from the 'learnt' table where the field 'turn_id' is equal to @turnID.
 func ResetLearntValue(turnID int) error {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := conn.Exec("DELETE FROM learnt WHERE turn_id = ?", turnID)
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	_, err := db.Exec("DELETE FROM learnt WHERE turn_id = ?", turnID)
 
 	return err
 }
 
 // ResetAllLearntValues empties the `learnt` table.
 func ResetAllLearntValues() error {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := conn.Exec("DELETE FROM learnt")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	_, err := db.Exec("DELETE FROM learnt")
 	return err
 }
 
 // GetAllLearntValues returns a list of all the entries stored in the 'learnt' table.
 // Each entry is mapped onto a LearntWithTid object.
 func GetAllLearntValues() []messages.LearntWithTid {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := conn.Query("SELECT * FROM learnt ORDER BY turn_id")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, err := db.Query("SELECT * FROM learnt ORDER BY turn_id")
 	if err != nil {
-		log.Print("ERR rilevato in conn.Query - ", err.Error())
+		log.Print("ERR rilevato in db.Query - ", err.Error())
 	}
 
 	var m []messages.LearntWithTid
@@ -277,10 +285,10 @@ func GetAllLearntValues() []messages.LearntWithTid {
 // This function not used anymore
 /*
 func GetMissingTurnIDs() []int {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := conn.Query("SELECT l.turn_id FROM learnt as l LEFT JOIN proposal as p ON l.turn_id = p.turn_id WHERE p.turn_id is NULL")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, err := db.Query("SELECT l.turn_id FROM learnt as l LEFT JOIN proposal as p ON l.turn_id = p.turn_id WHERE p.turn_id is NULL")
 	if err != nil {
-		log.Print("ERR rilevato in conn.Query - ", err.Error())
+		log.Print("ERR rilevato in db.Query - ", err.Error())
 	}
 
 	var missing []int
@@ -301,14 +309,14 @@ func GetMissingTurnIDs() []int {
 // GetLastTurnID returns the highest turn ID found in the `learnt` table.
 // 0 is returned if table is empty.
 func GetLastTurnID() int {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	row := conn.QueryRow("SELECT turn_id FROM learnt ORDER BY turn_id DESC")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	row := db.QueryRow("SELECT turn_id FROM learnt ORDER BY turn_id DESC")
 
 	var lastID int
 
 	err := row.Scan(&lastID)
 	if err != nil {
-		// sql.ErrNoRows, --> problema nel nome del campo/tabella oppure problemi nella connessione
+		// sql.ErrNoRows, --> problema nel nome del campo/tabella oppure problemi nella dbessione
 	}
 	return lastID
 }
@@ -316,8 +324,8 @@ func GetLastTurnID() int {
 // GetLearntValuesTurnID is a map used as a set, the keys are the turnIDs of the learnt values.
 // map[int]interface{} is said to be more efficient than map[int]bool, doesn't really matter.
 func GetLearntValuesTurnID() *map[int]bool {
-	conn, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, _ := conn.Query("SELECT turn_id FROM learnt ORDER BY turn_id ASC")
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, _ := db.Query("SELECT turn_id FROM learnt ORDER BY turn_id ASC")
 
 	learntValuesTurnID := make(map[int]bool)
 
