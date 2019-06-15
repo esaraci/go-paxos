@@ -119,9 +119,11 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	if err != nil {
 		http.Error(w, err.Error(), 500)
+		log.Print("Entro nel primo errroe")
 		return
 	}
 
+	log.Print("BODY:", string(b))
 	type updateRequestMessage struct {
 		Action string `json:"action"`
 	}
@@ -131,7 +133,7 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(b, &updateRequest)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
-		return
+		log.Print(err.Error())
 	}
 
 	var status string

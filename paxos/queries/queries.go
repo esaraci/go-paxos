@@ -38,7 +38,6 @@ func InitDatabase() {
 	COMMIT;`)
 }
 
-
 /*
 # ========================================================= #
 #                     PROPOSAL QUERIES                      #
