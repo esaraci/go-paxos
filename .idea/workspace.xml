@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/node_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paxos/queries/queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/queries/queries.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/messages/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/messages/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/queries/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/queries/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/messages/messages.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/messages/messages.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/seeker.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/seeker.go" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,17 +56,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/paxos/seeker.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3150">
-              <caret line="220" selection-start-line="220" selection-end-line="220" />
+            <state relative-caret-position="584">
+              <caret line="242" lean-forward="true" selection-start-line="242" selection-end-line="242" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/paxos/messages/messages.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_controller.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="138" lean-forward="true" selection-start-line="138" selection-end-line="138" />
+            <state relative-caret-position="2055">
+              <caret line="149" column="53" selection-start-line="149" selection-start-column="53" selection-end-line="149" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -134,8 +146,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>some</find>
-      <find>http.error</find>
       <find>turn_id</find>
       <find>loadCon</find>
       <find>go-paxos</find>
@@ -164,6 +174,8 @@
       <find>DB_CONN</find>
       <find>uèdate</find>
       <find>info</find>
+      <find>hoe</find>
+      <find>These structure</find>
     </findStrings>
     <replaceStrings>
       <replace>res</replace>
@@ -211,10 +223,8 @@
         <option value="$PROJECT_DIR$/paxos/Seeker.go" />
         <option value="$PROJECT_DIR$/seeker.go" />
         <option value="$PROJECT_DIR$/LICENSE" />
-        <option value="$PROJECT_DIR$/paxos/seeker.go" />
         <option value="$PROJECT_DIR$/paxos/learner.go" />
         <option value="$PROJECT_DIR$/paxos/proposal/proposal.go" />
-        <option value="$PROJECT_DIR$/paxos/messages/messages.go" />
         <option value="$PROJECT_DIR$/MAKEFILE" />
         <option value="$PROJECT_DIR$/.netrc" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -232,10 +242,12 @@
         <option value="$PROJECT_DIR$/paxos/utils.go" />
         <option value="$PROJECT_DIR$/config.yaml" />
         <option value="$PROJECT_DIR$/node_controller.go" />
+        <option value="$PROJECT_DIR$/paxos/seeker.go" />
+        <option value="$PROJECT_DIR$/paxos/messages/messages.go" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-4" />
     <option name="width" value="964" />
     <option name="height" value="1048" />
@@ -257,6 +269,24 @@
               <item name="go-paxos" type="b2602c69:ProjectViewProjectNode" />
               <item name="go-paxos" type="462c0819:PsiDirectoryNode" />
               <item name="paxos" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="go-paxos" type="b2602c69:ProjectViewProjectNode" />
+              <item name="go-paxos" type="462c0819:PsiDirectoryNode" />
+              <item name="paxos" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="go-paxos" type="b2602c69:ProjectViewProjectNode" />
+              <item name="go-paxos" type="462c0819:PsiDirectoryNode" />
+              <item name="paxos" type="462c0819:PsiDirectoryNode" />
+              <item name="messages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="go-paxos" type="b2602c69:ProjectViewProjectNode" />
+              <item name="go-paxos" type="462c0819:PsiDirectoryNode" />
+              <item name="paxos" type="462c0819:PsiDirectoryNode" />
+              <item name="proposal" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -485,14 +515,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="0" width="964" height="1048" extended-state="0" />
+    <frame x="0" y="0" width="1920" height="1044" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49519232" visible="true" weight="0.17142858" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49519232" visible="true" weight="0.1670224" />
       <window_info id="Structure" order="1" sideWeight="0.5048077" side_tool="true" weight="0.16595517" />
       <window_info id="Favorites" order="2" sideWeight="0.5048077" side_tool="true" weight="0.16595517" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.63553894" weight="0.32785088" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.715048" visible="true" weight="0.31441048" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.715048" weight="0.31441048" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991228" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -664,13 +695,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/todo.go" />
-    <entry file="file://$PROJECT_DIR$/paxos/messages/messages.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -735,10 +759,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/paxos/seeker.go">
+    <entry file="file://$PROJECT_DIR$/node_controller.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3150">
-          <caret line="220" selection-start-line="220" selection-end-line="220" />
+        <state relative-caret-position="2055">
+          <caret line="149" column="53" selection-start-line="149" selection-start-column="53" selection-end-line="149" selection-end-column="53" />
         </state>
       </provider>
     </entry>
@@ -787,10 +811,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_controller.go">
+    <entry file="file://$PROJECT_DIR$/paxos/seeker.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="138" lean-forward="true" selection-start-line="138" selection-end-line="138" />
+        <state relative-caret-position="584">
+          <caret line="242" lean-forward="true" selection-start-line="242" selection-end-line="242" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paxos/messages/messages.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
         </state>
       </provider>
     </entry>

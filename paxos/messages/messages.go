@@ -1,5 +1,5 @@
 // Package messages exposes some of the structures used for internal communication.
-// These structure are usually marshalled (to json) before being sent to remote nodes.
+// These structures are usually marshalled (to json) before being sent to remote nodes.
 // Messages received from remote nodes are usually unmarshalled (from json) to these structures.
 package messages
 
@@ -45,6 +45,6 @@ type NewValuesRequest struct {
 // NewValuesResponse describes the response received after a NewValueRequest message was sent. When receiving this kind of message all of its contents must be learned.
 type NewValuesResponse struct {
 	// map having integers as keys and strings as values; the keys are the turn ids, the values are the learnt values for the respective key.
-	// See ComputeNewValueResponse in'seeker.go' to understand hoe this map is computed.
+	// See ComputeNewValueResponse in'seeker.go' to understand how this map is computed.
 	ToLearn map[int]string `json:"to_learn"`
 }

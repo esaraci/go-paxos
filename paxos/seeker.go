@@ -65,7 +65,7 @@ func SendSeek() {
 // askForDanglingProposals will retrieve those proposals whose value is not learnt yet ('dangling' proposals). After doing so a prepare request will be instantiated for each retrieved (dangling) proposal.
 // The aim of this function is to achieve forward progress for those proposals which, for any kind of reason, never managed to get learnt by the network.
 // This function is the first of the two components (the second being askForNewValues) whose objective is to achieve eventual consistency which in this case is strictly linked with froward progress.
-// This is the only function which needs to know about the existence of the proposer, since SendPrepare function is used. The proposer however, like the acceptor and the learner, only knows about its own existence.
+// This is the only function which needs to know about the existence of the proposer, since SendPrepare function is used. The proposer however, like the acceptor or the learner, only knows about its own existence.
 func askForDanglingProposals() {
 
 	// getting all proposals which dont have an entry in the 'learnt' table

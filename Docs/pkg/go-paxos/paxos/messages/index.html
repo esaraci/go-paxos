@@ -104,7 +104,7 @@
 				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
 				<p>
 Package messages exposes some of the structures used for internal communication.
-These structure are usually marshalled (to json) before being sent to remote nodes.
+These structures are usually marshalled (to json) before being sent to remote nodes.
 Messages received from remote nodes are usually unmarshalled (from json) to these structures.
 </p>
 
@@ -183,7 +183,7 @@ Messages received from remote nodes are usually unmarshalled (from json) to thes
 		
 			
 			
-			<h2 id="Body">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=491:1016#L1">Body</a>
+			<h2 id="Body">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=492:1017#L1">Body</a>
 				<a class="permalink" href="index.html#Body">&#xb6;</a>
 				
 				
@@ -213,7 +213,7 @@ Body is the body of the message being sent. It contains the main contents of the
 		
 			
 			
-			<h2 id="GenericMessage">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=1139:1374#L8">GenericMessage</a>
+			<h2 id="GenericMessage">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=1140:1375#L8">GenericMessage</a>
 				<a class="permalink" href="index.html#GenericMessage">&#xb6;</a>
 				
 				
@@ -243,7 +243,7 @@ GenericMessage is used as wrapper for the Body type. It adds two crucial fields:
 		
 			
 			
-			<h2 id="LearntWithTid">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=1854:2163#L24">LearntWithTid</a>
+			<h2 id="LearntWithTid">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=1855:2164#L24">LearntWithTid</a>
 				<a class="permalink" href="index.html#LearntWithTid">&#xb6;</a>
 				
 				
@@ -274,7 +274,7 @@ This class is useful when printing all or multiple learnt values.
 		
 			
 			
-			<h2 id="NewValuesRequest">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=2270:2556#L30">NewValuesRequest</a>
+			<h2 id="NewValuesRequest">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=2271:2557#L30">NewValuesRequest</a>
 				<a class="permalink" href="index.html#NewValuesRequest">&#xb6;</a>
 				
 				
@@ -303,7 +303,7 @@ NewValuesRequest describes what our highest learnt turn id is and which past tur
 		
 			
 			
-			<h2 id="NewValuesResponse">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=2726:3026#L36">NewValuesResponse</a>
+			<h2 id="NewValuesResponse">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=2727:3027#L36">NewValuesResponse</a>
 				<a class="permalink" href="index.html#NewValuesResponse">&#xb6;</a>
 				
 				
@@ -314,7 +314,7 @@ NewValuesResponse describes the response received after a NewValueRequest messag
 
 			<pre>type NewValuesResponse struct {
     <span class="comment">// map having integers as keys and strings as values; the keys are the turn ids, the values are the learnt values for the respective key.</span>
-    <span class="comment">// See ComputeNewValueResponse in&#39;seeker.go&#39; to understand hoe this map is computed.</span>
+    <span class="comment">// See ComputeNewValueResponse in&#39;seeker.go&#39; to understand how this map is computed.</span>
 <span id="NewValuesResponse.ToLearn"></span>    ToLearn map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;to_learn&#34;`
 }
 </pre>
@@ -333,7 +333,7 @@ NewValuesResponse describes the response received after a NewValueRequest messag
 		
 			
 			
-			<h2 id="ProposalWithTid">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=1531:1653#L16">ProposalWithTid</a>
+			<h2 id="ProposalWithTid">type <a href="http://localhost:6060/src/go-paxos/paxos/messages/messages.go?s=1532:1654#L16">ProposalWithTid</a>
 				<a class="permalink" href="index.html#ProposalWithTid">&#xb6;</a>
 				
 				

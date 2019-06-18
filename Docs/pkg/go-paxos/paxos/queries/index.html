@@ -151,6 +151,9 @@ Package queries implements all the queries needed by this specific implementatio
 				<dd><a href="index.html#InitDatabase">func InitDatabase()</a></dd>
 			
 				
+				<dd><a href="index.html#PrepareDBConn">func PrepareDBConn()</a></dd>
+			
+				
 				<dd><a href="index.html#ResetAllLearntValues">func ResetAllLearntValues() error</a></dd>
 			
 				
@@ -195,7 +198,7 @@ Package queries implements all the queries needed by this specific implementatio
 		
 			
 			
-			<h2 id="GetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=8757:8807#L239">GetAllLearntValues</a>
+			<h2 id="GetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=8766:8816#L246">GetAllLearntValues</a>
 				<a class="permalink" href="index.html#GetAllLearntValues">&#xb6;</a>
 				
 				
@@ -212,7 +215,7 @@ Each entry is mapped onto a LearntWithTid object.
 		
 			
 			
-			<h2 id="GetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=2602:2651#L71">GetAllProposals</a>
+			<h2 id="GetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=2637:2686#L76">GetAllProposals</a>
 				<a class="permalink" href="index.html#GetAllProposals">&#xb6;</a>
 				
 				
@@ -229,7 +232,7 @@ Each entry is mapped onto a messages.ProposalWithTid object.
 		
 			
 			
-			<h2 id="GetDanglingProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=6092:6146#L163">GetDanglingProposals</a>
+			<h2 id="GetDanglingProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=6113:6167#L170">GetDanglingProposals</a>
 				<a class="permalink" href="index.html#GetDanglingProposals">&#xb6;</a>
 				
 				
@@ -246,7 +249,7 @@ The map uses the turn ID as the key and a Proposal object as the value.
 		
 			
 			
-			<h2 id="GetLastTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=10135:10159#L293">GetLastTurnID</a>
+			<h2 id="GetLastTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=10136:10160#L300">GetLastTurnID</a>
 				<a class="permalink" href="index.html#GetLastTurnID">&#xb6;</a>
 				
 				
@@ -263,7 +266,7 @@ GetLastTurnID returns the highest turn ID found in the `learnt` table.
 		
 			
 			
-			<h2 id="GetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=7246:7284#L199">GetLearntValue</a>
+			<h2 id="GetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=7263:7301#L206">GetLearntValue</a>
 				<a class="permalink" href="index.html#GetLearntValue">&#xb6;</a>
 				
 				
@@ -280,7 +283,7 @@ If no value has been learnt for the requested @turnID, an empty string is return
 		
 			
 			
-			<h2 id="GetLearntValuesTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=10655:10697#L308">GetLearntValuesTurnID</a>
+			<h2 id="GetLearntValuesTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=10652:10694#L315">GetLearntValuesTurnID</a>
 				<a class="permalink" href="index.html#GetLearntValuesTurnID">&#xb6;</a>
 				
 				
@@ -297,7 +300,7 @@ map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t 
 		
 			
 			
-			<h2 id="GetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=1618:1672#L39">GetProposal</a>
+			<h2 id="GetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=1655:1709#L44">GetProposal</a>
 				<a class="permalink" href="index.html#GetProposal">&#xb6;</a>
 				
 				
@@ -319,7 +322,7 @@ The entry will be mapped onto a proposal.Proposal object.
 		
 			
 			
-			<h2 id="GetProposalsTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=5429:5468#L141">GetProposalsTurnID</a>
+			<h2 id="GetProposalsTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=5452:5491#L148">GetProposalsTurnID</a>
 				<a class="permalink" href="index.html#GetProposalsTurnID">&#xb6;</a>
 				
 				
@@ -336,7 +339,7 @@ map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t 
 		
 			
 			
-			<h2 id="InitDatabase">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=449:468#L8">InitDatabase</a>
+			<h2 id="InitDatabase">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=541:560#L14">InitDatabase</a>
 				<a class="permalink" href="index.html#InitDatabase">&#xb6;</a>
 				
 				
@@ -352,7 +355,20 @@ InitDatabase executes the command needed to initialize the database.
 		
 			
 			
-			<h2 id="ResetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=8471:8504#L231">ResetAllLearntValues</a>
+			<h2 id="PrepareDBConn">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=393:413#L9">PrepareDBConn</a>
+				<a class="permalink" href="index.html#PrepareDBConn">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PrepareDBConn()</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="ResetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=8482:8515#L238">ResetAllLearntValues</a>
 				<a class="permalink" href="index.html#ResetAllLearntValues">&#xb6;</a>
 				
 				
@@ -368,7 +384,7 @@ ResetAllLearntValues empties the `learnt` table.
 		
 			
 			
-			<h2 id="ResetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=5092:5122#L133">ResetAllProposals</a>
+			<h2 id="ResetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=5117:5147#L140">ResetAllProposals</a>
 				<a class="permalink" href="index.html#ResetAllProposals">&#xb6;</a>
 				
 				
@@ -384,7 +400,7 @@ ResetAllProposals empties the `proposal` table.
 		
 			
 			
-			<h2 id="ResetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=8239:8278#L223">ResetLearntValue</a>
+			<h2 id="ResetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=8252:8291#L230">ResetLearntValue</a>
 				<a class="permalink" href="index.html#ResetLearntValue">&#xb6;</a>
 				
 				
@@ -400,7 +416,7 @@ ResetLearntValue deletes the entry from the &#39;learnt&#39; table where the fie
 		
 			
 			
-			<h2 id="ResetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=4863:4899#L126">ResetProposal</a>
+			<h2 id="ResetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=4890:4926#L133">ResetProposal</a>
 				<a class="permalink" href="index.html#ResetProposal">&#xb6;</a>
 				
 				
@@ -416,7 +432,7 @@ ResetProposal deletes the entry from the &#39;proposal&#39; table where the fiel
 		
 			
 			
-			<h2 id="SetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=7880:7933#L215">SetLearntValue</a>
+			<h2 id="SetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=7895:7948#L222">SetLearntValue</a>
 				<a class="permalink" href="index.html#SetLearntValue">&#xb6;</a>
 				
 				
@@ -434,7 +450,7 @@ If the learnt value for the requested @turnID is already present, it will be ove
 		
 			
 			
-			<h2 id="SetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=3641:3724#L104">SetProposal</a>
+			<h2 id="SetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=3673:3756#L110">SetProposal</a>
 				<a class="permalink" href="index.html#SetProposal">&#xb6;</a>
 				
 				
