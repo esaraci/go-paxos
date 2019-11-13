@@ -5,7 +5,8 @@ port          : 2222
 manual_mode   : true
 timeout       : 2
 seek_timeout  : 30
-quorum        : 
+wait_before_automatic_request: 3
+quorum        :
 nodes:
   - http://35.222.255.1:2222
   - http://35.222.232.57:2222

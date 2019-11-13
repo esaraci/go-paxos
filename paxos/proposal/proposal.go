@@ -32,7 +32,7 @@ func (p *Proposal) IsGEThan(other *Proposal) bool {
 	return p.IsGreaterThan(other) || p.IsEqualTo(other)
 }
 
-// IsLEThan overrides the "<=" operator for Proposal object.
+// IsLEThan overrides the "<=" operator for Proposal objects.
 func (p *Proposal) IsLEThan(other *Proposal) bool {
 	return p.IsLowerThan(other) || p.IsEqualTo(other)
 }

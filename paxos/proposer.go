@@ -131,9 +131,8 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 		}
 	}
 
-	// after i checked all the proposals (looking for the highest)
-	// i check if i reached QUORUM
-
+	// after i checked ALL the proposals (looking for the highest)
+	// i check if QUORUM is reached
 	if agreements >= config.CONF.QUORUM {
 
 		// QUORUM has been reached
@@ -158,8 +157,10 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 
 		// let SendAccept on his own and return
 		if !config.CONF.MANUAL_MODE {
+			time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 			log.Printf("[PROPOSER] -> Sending accept request.")
 			messageToUser += fmt.Sprintf("Sending accept request.")
+			//BUG: check why incrementedSeq seems to be right while the value of seq passed to SendAccept is lower
 			go SendAccept(turnID, highestPromise.Seq, highestPromise.V)
 		} else {
 			log.Printf("[PROPOSER] -> Waiting for user to send accept request; the algorithm suggests: /proposer/send_accept?turn_id=%d&seq=%d&v=%s", turnID, highestPromise.Seq, highestPromise.V)
@@ -245,12 +246,13 @@ func countApprovals(responseBuffer chan []byte, turnID int, _ int, proposedV str
 	}
 
 	// i could put this right after the approval increment and break the loop
-	// when quorum is reacheLa proced
+	// when quorum is reached, but i prefer
 	// checking at the end for readability purposes
 	if approvals >= config.CONF.QUORUM {
 		log.Printf("[PROPOSER] -> Quorum for accept request reached: got %d/%d accepts.", approvals, len(config.CONF.NODES))
 		messageToUser = fmt.Sprintf("Quorum has been reached for accept request (%d/%d). ", approvals, len(config.CONF.NODES))
 		if !config.CONF.MANUAL_MODE {
+			time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 			log.Printf("[PROPOSER] -> Sending learn request.")
 			messageToUser += fmt.Sprintf("Sending learn request.")
 			go SendLearn(turnID, proposedV)
@@ -268,6 +270,7 @@ func countApprovals(responseBuffer chan []byte, turnID int, _ int, proposedV str
 			if !config.CONF.MANUAL_MODE {
 
 				// if we are not in manual mode then wait a random amount of seconds to allow the other proposer(s) to finish
+				// this prevents the node from sending an excessive amount of requests and sabotaging other proposals.
 				r := 0.2 + rand.Float32()
 				time.Sleep(time.Duration(r) * time.Second)
 

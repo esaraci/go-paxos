@@ -175,7 +175,7 @@ func GetProposalsTurnID() *map[int]bool {
 	return &proposalsTurnID
 }
 
-// GetDanglingProposals returns a map of the proposals found in the 'proposal' whose turn ID does not have an entry 'learnt' table.
+// GetDanglingProposals returns a map of the proposals found in the 'proposal' table whose turn ID does not have an entry 'learnt' table.
 // The map uses the turn ID as the key and a Proposal object as the value.
 func GetDanglingProposals() *map[int]proposal.Proposal {
 

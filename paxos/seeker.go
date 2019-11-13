@@ -1,5 +1,5 @@
 // seeker.go introduces a new component to the paxos algorithm.
-// The seeker components works together with the proposer in order to achieve eventual consistency and forward progress.
+// The seeker components work together with the proposer in order to achieve consistency and forward progress.
 // While the seeker needs the proposer in order to perform his task, the proposer does not need to know about the seeker's existence.
 // The task of the seeker is to "seek" missing values be those new, never seen values, or old, never finalized proposals.
 // To avoid flooding the network with packets, some probabilities are introduced in the seeker functions, meaning that
@@ -64,8 +64,8 @@ func SendSeek() {
 
 // askForDanglingProposals will retrieve those proposals whose value is not learnt yet ('dangling' proposals). After doing so a prepare request will be instantiated for each retrieved (dangling) proposal.
 // The aim of this function is to achieve forward progress for those proposals which, for any kind of reason, never managed to get learnt by the network.
-// This function is the first of the two components (the second being askForNewValues) whose objective is to achieve eventual consistency which in this case is strictly linked with froward progress.
-// This is the only function which needs to know about the existence of the proposer, since SendPrepare function is used. The proposer however, like the acceptor or the learner, only knows about its own existence.
+// This function is the first of the two components (the second being askForNewValues) whose objective is to achieve consistency (safety) which in this case is strictly linked with froward progress.
+// This is the only function which needs to know about the existence of the proposer, since its SendPrepare function is used. The proposer however, like the acceptor or the learner, only knows about its own existence.
 func askForDanglingProposals() {
 
 	// getting all proposals which dont have an entry in the 'learnt' table
@@ -97,7 +97,6 @@ func askForDanglingProposals() {
 func askForNewValues() {
 	session := &http.Client{Timeout: time.Second * config.CONF.TIMEOUT}
 	nodes := *extractRandomNodes(0.25)
-
 	log.Printf("[SEEKER] -> %d node(s) has/have been selected as target(s) to seek for new values.", len(nodes))
 
 	if len(nodes) != 0 {
@@ -142,7 +141,7 @@ func learnFromDict(newValuesResponses *map[int]string) {
 //	The message we send will have lastID = 7, missing = [3, 4, 7]
 //
 // 5, 6 are not included since they are dangling proposals and will be handled by askForDanglingProposals.
-// any value higher than 8 (9, 10) are currently ignored, but if any node has info about any proposal with turnID > 8 it will let us know since we told them what our highest turn id was.
+// any value higher than 8 (9, 10) is currently ignored, but if any node has info about any proposal with turnID > 8 it will let us know since we told them what our highest turn id was.
 func ComputeNewValuesRequest() messages.NewValuesRequest {
 
 	// highest learnt turn id

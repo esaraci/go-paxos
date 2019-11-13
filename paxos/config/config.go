@@ -21,9 +21,10 @@ type Conf struct {
 
 	PORT int `yaml:"port"` // PORT defines the TCP port to which the web server will be listening.
 
-	MANUAL_MODE  bool          `yaml:"manual_mode"`  // MANUAL_MODE defines whether the nodes proceed automatically through the phases or wait for user interaction.
-	TIMEOUT      time.Duration `yaml:"timeout"`      // TIMEOUT defines the time duration (in seconds) waited by the client before assuming a node is not reachable.
-	SEEK_TIMEOUT time.Duration `yaml:"seek_timeout"` // SEEK_TIMEOUT defines the time duration (in seconds) needed before performing new a seek request (used only when MANUAL_MODE = false).
+	MANUAL_MODE                   bool          `yaml:"manual_mode"`  // MANUAL_MODE defines whether the nodes proceed automatically through the phases or wait for user interaction.
+	TIMEOUT                       time.Duration `yaml:"timeout"`      // TIMEOUT defines the time duration (in seconds) waited by the client before assuming a node is not reachable.
+	SEEK_TIMEOUT                  time.Duration `yaml:"seek_timeout"` // SEEK_TIMEOUT defines the time duration (in seconds) needed before performing new a seek request (used only when MANUAL_MODE = false).
+	WAIT_BEFORE_AUTOMATIC_REQUEST time.Duration `yaml:"wait_before_automatic_request"` // WAIT_BEFORE_AUTOMATIC_REQUEST defines the time duration (in seconds) waited by the proposer before sending and accept request of a learn_request when in AUTOMATIC_MODE
 
 	NODES []string `yaml:"nodes"` // NODES defines the list of the paxos nodes of the system.
 
@@ -44,7 +45,7 @@ func (c *Conf) LoadConfigFile(fn string) {
 }
 
 // FillEmptyFields fills in those fields that were left empty in the .yaml file or those which need a run-time computation.
-// These are the only fields which can be left blank, each field that is not initialized by this function has to be filled by the user in the .yaml file.
+// These are the only fields which can be left blank, if one of the field is not initialized by this function, has to be initialized by the user in the '.yaml' file.
 func (c *Conf) FillEmptyFields() {
 
 	if c.PID == 0 {

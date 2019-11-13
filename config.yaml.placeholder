@@ -5,6 +5,7 @@ port          : [#1#]
 manual_mode   : true
 timeout       : 2
 seek_timeout  : 30
+wait_before_automatic_request: 3
 quorum        :
 nodes:
   - http://127.0.0.1:2222

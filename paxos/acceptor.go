@@ -81,7 +81,7 @@ func ReceivePrepare(prepareRequest messages.GenericMessage) messages.GenericMess
 
 	// computing @response
 	// @response is a status variable, it holds the result of the message we will be sending back.
-	// Default is "retry" since an acceptor can always ```safely "ignore" a proposal request.```
+	// Default is "retry" since an acceptor can always "safely ignore" a proposal request.```
 	response := "retry"
 	if !ok || newP.IsGreaterThan(&oldP) {
 
