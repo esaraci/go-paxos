@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.yaml.placeholder" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml.placeholder" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paxos/acceptor.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/acceptor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/node_controller.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paxos/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paxos/proposal/proposal.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/proposal/proposal.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paxos/proposer.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/proposer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paxos/queries/queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/queries/queries.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paxos/seeker.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/seeker.go" afterDir="false" />
@@ -50,6 +49,7 @@
   <component name="ProjectId" id="1TYpv8TiCyS2DHCunxAGAvJs7kk" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -205,7 +205,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build main.go">
+  <component name="RunManager" selected="Go Build.go build node_controller.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="go-paxos" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -234,6 +234,15 @@
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
+    <configuration name="go build proposer.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="go-paxos" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/paxos/proposer.go" />
+      <package value="WebServer" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="go-paxos" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -248,6 +257,7 @@
     <list>
       <item itemvalue="Go Build.go build main.go" />
       <item itemvalue="Go Build.go build node_controller.go" />
+      <item itemvalue="Go Build.go build proposer.go" />
     </list>
   </component>
   <component name="TypeScriptGeneratedFilesManager">

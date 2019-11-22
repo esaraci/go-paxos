@@ -42,7 +42,7 @@ func extractRandomProposals(danglingProposals *map[int]proposal.Proposal, pr flo
 
 	for turnID := range *danglingProposals {
 		r := rand.Float64()
-		if r < (1 - pr) { // removing proposals from list with probability 1-p. i.e. "choosing nodes with probability p"
+		if r < (1 - pr) { // removing proposals from list with probability 1-p. i.e. "choosing proposals with probability p"
 			delete(*danglingProposals, turnID)
 		}
 	}
@@ -73,8 +73,8 @@ func askForDanglingProposals() {
 
 	// reducing the number of dangling proposals to seek
 	// keep in mind that each node will perform this kind of request
-	// param pr should be tuned aiming not to overload the network
-	danglingProposals = extractRandomProposals(danglingProposals, 0.5)
+	// param pr should be tuned aiming not to overload the network (0.5)
+	danglingProposals = extractRandomProposals(danglingProposals, config.CONF.PR_PROPOSALS)
 
 	if len(*danglingProposals) == 0 {
 		log.Printf("[SEEKER] -> There are currently no dangling proposals or no proposals have been extracted.")
@@ -96,7 +96,8 @@ func askForDanglingProposals() {
 // The reason we send the last turnID is because we want to know if there are some new values (with higher turnID) that never reached us.
 func askForNewValues() {
 	session := &http.Client{Timeout: time.Second * config.CONF.TIMEOUT}
-	nodes := *extractRandomNodes(0.25)
+	// selecting only some nodes, i.e. selecting a node with probability p
+	nodes := *extractRandomNodes(config.CONF.PR_NODES)
 	log.Printf("[SEEKER] -> %d node(s) has/have been selected as target(s) to seek for new values.", len(nodes))
 
 	if len(nodes) != 0 {

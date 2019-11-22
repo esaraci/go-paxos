@@ -52,12 +52,14 @@ func learnAndFlood(responseMessage messages.GenericMessage) {
 		// finally i should drop any further computation
 		err := queries.SetLearntValue(turnID, proposedV)
 		if err != nil {
-			// can this ever happen?
-			// could not store learnt, pretend nothing happened and go on
+			// can this ever happen?, yes it can.
+			// could not store learnt, do nothing
+		} else {
+			// flooding with learn requests
+			log.Print("[PROPOSER] -> Flooding is about to begin.")
+			go SendLearn(turnID, proposedV)
 		}
-		// flooding with learn requests
-		log.Print("[PROPOSER] -> Flooding is about to begin.")
-		go SendLearn(turnID, proposedV)
+
 
 	} else {
 		if currentV != proposedV {
@@ -151,7 +153,7 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 		}
 
 		// if any response had a non empty valued proposals, then highestsPromise.V holds that value
-		// however i need to assign my "n" to that proposal (i.e. overwriting Pid and Seq)
+		// however i need to assign my "n" to that proposal (i.e. overwriting Pid and Seq) why? <- because mine is higher as I am inside this function
 		highestPromise.Pid = config.CONF.PID
 		highestPromise.Seq = seq
 
@@ -159,8 +161,7 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 		if !config.CONF.MANUAL_MODE {
 			time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 			log.Printf("[PROPOSER] -> Sending accept request.")
-			messageToUser += fmt.Sprintf("Sending accept request.")
-			//BUG: check why incrementedSeq seems to be right while the value of seq passed to SendAccept is lower
+			messageToUser += fmt.Sprintf(" Sending accept request.")
 			go SendAccept(turnID, highestPromise.Seq, highestPromise.V)
 		} else {
 			log.Printf("[PROPOSER] -> Waiting for user to send accept request; the algorithm suggests: /proposer/send_accept?turn_id=%d&seq=%d&v=%s", turnID, highestPromise.Seq, highestPromise.V)
@@ -175,6 +176,12 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 			log.Printf("[PROPOSER] -> Quorum has NOT been reached (%d/%d) for prepare request with proposal {turn_id: %d, seq: %d, v: %s}, but a majority of nodes is up and running; increment 'seq' and retry.", agreements, len(config.CONF.NODES), turnID, seq, proposedV)
 			incrementedSeq := highestRetry.Seq + 1
 			if !config.CONF.MANUAL_MODE {
+				// waiting a random amount before retrying to allow others to finish
+				// rand.float32() generates a number between 0 and 1, adding a flat 0.2 amount
+				// r := min + rand.Float64() * (max - min)
+				r := rand.Float64() * 5
+				time.Sleep(time.Duration(r) * time.Second)
+				//time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 				log.Printf("[PROPOSER] -> Sending incremented prepare request.")
 				messageToUser += fmt.Sprintf(" Retrying with an incrememented prepare request.")
 				go SendPrepare(turnID, incrementedSeq, proposedV)
@@ -265,15 +272,16 @@ func countApprovals(responseBuffer chan []byte, turnID int, _ int, proposedV str
 	} else {
 		messageToUser = fmt.Sprintf("Quorum has NOT been reached for accept request (%d/%d). ", approvals, len(config.CONF.NODES))
 		if highestDecline.Pid != 0 && responseCount >= config.CONF.QUORUM {
-			log.Print("[PROPOSER] -> Quorum has NOT been reached for accept request but a majority of nodes is up and running; increment 'seq' and retry.")
+			log.Print("[PROPOSER] -> Quorum has NOT been reached for accept request but a majority of nodes is up and running; increment 'seq' and try again.")
 			incrementedSeq := highestDecline.Seq + 1
+			log.Printf("[COUNTING ACCEPTS] -> highest decline has seq = to %d, incrementing it brings it to %d", highestDecline.Seq, incrementedSeq)
 			if !config.CONF.MANUAL_MODE {
-
 				// if we are not in manual mode then wait a random amount of seconds to allow the other proposer(s) to finish
-				// this prevents the node from sending an excessive amount of requests and sabotaging other proposals.
-				r := 0.2 + rand.Float32()
+				// rand.float32() generates a number between 0 and 1, adding a flat 0.2 amount
+				// r := min + rand.Float64() * (max - min)
+				r := rand.Float64() * 5
 				time.Sleep(time.Duration(r) * time.Second)
-
+				//time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 				log.Printf("[PROPOSER] -> Sending incremented prepare requests.")
 				messageToUser += fmt.Sprintf("Retrying with an incrememented prepare request.")
 				go SendPrepare(turnID, incrementedSeq, proposedV)

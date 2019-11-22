@@ -3,11 +3,14 @@ package queries
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/mattn/go-sqlite3" // blank import because of no explicit use, only side effects needed.
 	"go-paxos/paxos/config"
 	"go-paxos/paxos/messages"
 	"go-paxos/paxos/proposal"
 	"log"
+	"net/http"
+	"time"
 )
 
 const (
@@ -64,7 +67,7 @@ func GetProposal(turnID int) (proposal.Proposal, bool) {
 	err := row.Scan(&pid, &seq, &v)
 	if err != nil {
 		// sql.ErrNoRows
-		log.Printf("[QUERIES] -> no proposal found for turn id: %d; returning an empty proposal.", turnID)
+		log.Printf("[QUERIES] -> No proposal found for turn id: %d; returning an empty proposal.", turnID)
 	}
 
 	ok := false
@@ -85,32 +88,33 @@ func GetProposal(turnID int) (proposal.Proposal, bool) {
 // Each entry is mapped onto a messages.ProposalWithTid object.
 func GetAllProposals() []messages.ProposalWithTid {
 
+	var m []messages.ProposalWithTid
+
 	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
 	rows, err := db.Query("SELECT * FROM proposal ORDER BY turn_id")
 	if err != nil {
 		log.Print("ERR rilevato in db.Query - ", err.Error())
-	}
+	} else {
+		defer rows.Close()
+		for rows.Next() {
 
-	var m []messages.ProposalWithTid
+			var turnID int
+			var pid sql.NullInt64
+			var seq sql.NullInt64
+			var v sql.NullString
 
-	defer rows.Close()
-	for rows.Next() {
+			err := rows.Scan(&turnID, &pid, &seq, &v)
 
-		var turnID int
-		var pid sql.NullInt64
-		var seq sql.NullInt64
-		var v sql.NullString
+			if err != nil {
+				log.Print("Error while scanning values: ", err.Error())
+			}
 
-		err := rows.Scan(&turnID, &pid, &seq, &v)
+			p := proposal.Proposal{Pid: int(pid.Int64), Seq: int(seq.Int64), V: v.String}
+			m = append(m, messages.ProposalWithTid{TurnID: turnID, Proposal: p})
 
-		if err != nil {
-			log.Print("Error while scanning values: ", err.Error())
 		}
-
-		p := proposal.Proposal{Pid: int(pid.Int64), Seq: int(seq.Int64), V: v.String}
-		m = append(m, messages.ProposalWithTid{TurnID: turnID, Proposal: p})
-
 	}
+
 	return m
 }
 
@@ -156,21 +160,27 @@ func ResetAllProposals() error {
 // GetProposalsTurnID is a map used as a set, the keys are the turnIDs of the proposals we know.
 // map[int]interface{} is said to be more efficient than map[int]bool, doesn't really matter.
 func GetProposalsTurnID() *map[int]bool {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, _ := db.Query("SELECT turn_id FROM proposal ORDER BY turn_id ASC")
 
 	proposalsTurnID := make(map[int]bool)
 
-	defer rows.Close()
-	for rows.Next() {
-		var turnID int
-		err := rows.Scan(&turnID)
-		if err != nil {
-			log.Print("scanning into  turn_id failed: ", err.Error())
-		} else {
-			proposalsTurnID[turnID] = true
-		}
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, err := db.Query("SELECT turn_id FROM proposal ORDER BY turn_id ASC")
 
+
+	if err != nil {
+		log.Print("ERR rilevato in db.Query - ", err.Error())
+	} else {
+		defer rows.Close()
+		for rows.Next() {
+			var turnID int
+			err := rows.Scan(&turnID)
+			if err != nil {
+				log.Print("scanning into  turn_id failed: ", err.Error())
+			} else {
+				proposalsTurnID[turnID] = true
+			}
+
+		}
 	}
 	return &proposalsTurnID
 }
@@ -179,27 +189,27 @@ func GetProposalsTurnID() *map[int]bool {
 // The map uses the turn ID as the key and a Proposal object as the value.
 func GetDanglingProposals() *map[int]proposal.Proposal {
 
+	danglingProposals := make(map[int]proposal.Proposal)
+
 	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
 	rows, err := db.Query("SELECT p.turn_id, p.pid, p.seq, p.value FROM proposal as p LEFT JOIN learnt as l ON p.turn_id = l.turn_id WHERE l.turn_id is NULL")
 	if err != nil {
 		log.Print("ERR rilevato in db.Query - ", err.Error())
-	}
+	} else {
+		defer rows.Close()
+		for rows.Next() {
+			var turnID int
+			var pid int
+			var seq int
+			var v sql.NullString
+			err := rows.Scan(&turnID, &pid, &seq, &v)
+			if err != nil {
+				log.Print("scanning into  turn_id failed: ", err.Error())
+			} else {
+				danglingProposals[turnID] = proposal.Proposal{Pid: pid, Seq: seq, V: v.String}
+			}
 
-	danglingProposals := make(map[int]proposal.Proposal)
-
-	defer rows.Close()
-	for rows.Next() {
-		var turnID int
-		var pid int
-		var seq int
-		var v sql.NullString
-		err := rows.Scan(&turnID, &pid, &seq, &v)
-		if err != nil {
-			log.Print("scanning into  turn_id failed: ", err.Error())
-		} else {
-			danglingProposals[turnID] = proposal.Proposal{Pid: pid, Seq: seq, V: v.String}
 		}
-
 	}
 
 	return &danglingProposals
@@ -228,10 +238,25 @@ func GetLearntValue(turnID int) string {
 
 // SetLearntValue inserts/updates an entry in the 'learnt' table where the field 'turn_id' is equal to @turnID.
 // If the requested @turnID does not exist, a new entry is created.
-// If the learnt value for the requested @turnID is already present, it will be overwritten.
+// If the learnt value for the requested @turnID is already present, it will be overwritten. (why?)
 func SetLearntValue(turnID int, v string) (err error) {
 	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
 	_, err = db.Exec("INSERT INTO learnt VALUES(?, ?) ON CONFLICT (turn_id) DO UPDATE SET value = excluded.value", turnID, v)
+
+	// counting how many rows in learnt table so i can notify some listener that i learnt all turn_ids
+	// it is needed for testing and benchmarking purposes
+	var howMany int
+	res := db.QueryRow("SELECT count(*) as count FROM learnt")
+	err = res.Scan(&howMany)
+	if err != nil {
+		// do nothing
+	} else {
+		if howMany == config.CONF.NUMBER_OF_TIDS {
+			now := time.Now()
+			sec := now.Unix()
+			go func() {http.Get(fmt.Sprintf("http://%s/timer?nid=%d&timestamp=%d&how_many=%d", config.CONF.LISTENER_IP, config.CONF.PID, sec, howMany))}()
+		}
+	}
 
 	return err
 }
@@ -240,7 +265,6 @@ func SetLearntValue(turnID int, v string) (err error) {
 func ResetLearntValue(turnID int) error {
 	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
 	_, err := db.Exec("DELETE FROM learnt WHERE turn_id = ?", turnID)
-
 	return err
 }
 
@@ -254,28 +278,28 @@ func ResetAllLearntValues() error {
 // GetAllLearntValues returns a list of all the entries stored in the 'learnt' table.
 // Each entry is mapped onto a LearntWithTid object.
 func GetAllLearntValues() []messages.LearntWithTid {
+
+	var m []messages.LearntWithTid
+
 	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
 	rows, err := db.Query("SELECT * FROM learnt ORDER BY turn_id")
 	if err != nil {
 		log.Print("ERR rilevato in db.Query - ", err.Error())
-	}
+	} else {
+		defer rows.Close()
+		for rows.Next() {
 
-	var m []messages.LearntWithTid
+			var turnID int
+			var v sql.NullString
 
-	defer rows.Close()
-	for rows.Next() {
+			err := rows.Scan(&turnID, &v)
 
-		var turnID int
-		var v sql.NullString
+			if err != nil {
+				log.Print("scanning into  turn_id", err.Error())
+			}
 
-		err := rows.Scan(&turnID, &v)
-
-		if err != nil {
-			log.Print("scanning into  turn_id", err.Error())
+			m = append(m, messages.LearntWithTid{TurnID: turnID, Learnt: v.String})
 		}
-
-		m = append(m, messages.LearntWithTid{TurnID: turnID, Learnt: v.String})
-
 	}
 	return m
 }
@@ -323,21 +347,26 @@ func GetLastTurnID() int {
 // GetLearntValuesTurnID is a map used as a set, the keys are the turnIDs of the learnt values.
 // map[int]interface{} is said to be more efficient than map[int]bool, doesn't really matter.
 func GetLearntValuesTurnID() *map[int]bool {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, _ := db.Query("SELECT turn_id FROM learnt ORDER BY turn_id ASC")
 
 	learntValuesTurnID := make(map[int]bool)
 
-	defer rows.Close()
-	for rows.Next() {
-		var TurnID int
-		err := rows.Scan(&TurnID)
-		if err != nil {
-			log.Print("scanning into  turn_id failed: ", err.Error())
-		} else {
-			learntValuesTurnID[TurnID] = true
-		}
+	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
+	rows, err := db.Query("SELECT turn_id FROM learnt ORDER BY turn_id ASC")
 
+	if err != nil {
+		log.Print("ERR rilevato in db.Query - ", err.Error())
+	} else {
+		defer rows.Close()
+		for rows.Next() {
+			var TurnID int
+			err := rows.Scan(&TurnID)
+			if err != nil {
+				log.Print("scanning into turn_id failed: ", err.Error())
+			} else {
+				learntValuesTurnID[TurnID] = true
+			}
+
+		}
 	}
 	return &learntValuesTurnID
 }

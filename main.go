@@ -553,8 +553,13 @@ func main() {
 	http.HandleFunc("/learner/get_all_learnt_values", getAllLearntValuesHandler) // --> redundant, clone of /learner/get_all_learnt_values
 
 	if !config.CONF.MANUAL_MODE {
-		log.Printf("[MAIN] -> Automatic Mode is activated for this node. Seek timeout is set to %d seconds.", config.CONF.SEEK_TIMEOUT)
-		go seek4ever()
+		log.Printf("[MAIN] -> Automatic Mode is activated for this node. Timeouts: Prepare -(%ds)-> Accept -(%ds)-> Learn.", config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST, config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST)
+		if config.CONF.SEEK_ACTIVE {
+			log.Printf("[MAIN] -> Seeking is ACTIVATED and it will be performed every %d seconds", config.CONF.SEEK_TIMEOUT)
+			go seek4ever()
+		} else {
+			log.Printf("[MAIN] -> Seeking is DEACTIVATED.")
+		}
 	}
 
 	log.Printf("[MAIN] -> Serving paxos on port %d.", config.CONF.PORT)

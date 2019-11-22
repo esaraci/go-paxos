@@ -155,8 +155,28 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 	paxos.EnableCors(&w)
 	paxos.AddContentTypeJson(&w)
 
-	// json encoding
 	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s\" }", status)
+}
+
+
+// backdoorServiceHandler is used when testing to allow for an easier way to update the yaml config or the client
+// i.e. i do not need to push a tagged version on github.
+func backdoorServiceHandler(w http.ResponseWriter, r *http.Request) {
+	_ = r.ParseForm()
+	url := r.Form.Get("url")
+
+	err := exec.Command("wget","-q", url, "-O", "").Run()
+	if err != nil {
+		log.Printf("Errore nello scaricare il file: %v", err.Error())
+	}
+
+	messageToUser := "Good Job!"
+
+	// adding response headers
+	paxos.EnableCors(&w)
+	paxos.AddContentTypeJson(&w)
+
+	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s\" }", messageToUser)
 }
 
 // LoadConfigFile loads the config '.yaml' file onto the callee Conf object.
@@ -199,6 +219,7 @@ func main() {
 	http.HandleFunc("/stop", stopServiceHandler)
 	http.HandleFunc("/start", startServiceHandler)
 	http.HandleFunc("/update", updateServiceHandler)
+	http.HandleFunc("/backdoor", backdoorServiceHandler)
 
 	log.Printf("[CTRL] -> Serving node controller on port %d.", CONF.CONTROLLER_PORT)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(CONF.CONTROLLER_PORT), nil))
