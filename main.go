@@ -513,6 +513,8 @@ func init() {
 		// file does exist but it's a folder, exit and ask the user to change the filename.
 		log.Fatalf("[ERROR] -> %s is a folder. The database has NOT been created. Change filename and retry.", config.CONF.DB_PATH)
 	}
+
+	queries.PrepareDBConn()
 }
 
 func main() {
