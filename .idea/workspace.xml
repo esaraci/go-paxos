@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -197,7 +198,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build node_controller.go">
+  <component name="RunManager" selected="Go Build.go build main.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="go-paxos" />
       <working_directory value="$PROJECT_DIR$/" />

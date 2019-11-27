@@ -502,16 +502,17 @@ func init() {
 		_, err = os.Create(config.CONF.DB_PATH)
 		if err != nil {
 			log.Print("[ERROR] -> Could not create database. Something is wrong.")
+		} else {
+			// now i certainly have a db file.
+			queries.PrepareDBConn()
+			queries.InitDatabase()
 		}
-		queries.InitDatabase()
 
+	// might have other err cases i want to handle
 	} else if info.IsDir() {
 		// file does exist but it's a folder, exit and ask the user to change the filename.
 		log.Fatalf("[ERROR] -> %s is a folder. The database has NOT been created. Change filename and retry.", config.CONF.DB_PATH)
 	}
-
-	// now i certainly have a db file.
-	queries.PrepareDBConn()
 }
 
 func main() {
