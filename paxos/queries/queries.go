@@ -10,6 +10,7 @@ import (
 	"go-paxos/paxos/proposal"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -254,7 +255,13 @@ func SetLearntValue(turnID int, v string) (err error) {
 		if howMany == config.CONF.NUMBER_OF_TIDS {
 			now := time.Now()
 			sec := now.Unix()
-			go func() {http.Get(fmt.Sprintf("http://%s/timer?nid=%d&timestamp=%d&how_many=%d", config.CONF.LISTENER_IP, config.CONF.PID, sec, howMany))}()
+			go func() {
+				_, err := http.Get(fmt.Sprintf("%s/timer?nid=%d&timestamp=%d&how_many=%d", config.CONF.LISTENER_IP, config.CONF.PID, sec, howMany))
+				if err != nil {
+					log.Printf("Errore nella richiesta di salvataggio del timer: %v", err.Error())
+					os.Exit(777)
+				}
+			}()
 		}
 	}
 

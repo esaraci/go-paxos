@@ -475,8 +475,15 @@ func infoHandler(w http.ResponseWriter, _ *http.Request) {
 func seek4ever() {
 	for {
 		time.Sleep(config.CONF.SEEK_TIMEOUT * time.Second)
-		log.Print("[SEEKER] -> Calling for seek()")
-		paxos.SendSeek()
+		r := rand.Float64()
+		log.Print("[SEEKER] -> Tossing a coin...")
+		if r < 0.75 {
+			log.Print("[SEEKER] -> Heads! Calling for seek()")
+			paxos.SendSeek()
+		} else {
+			log.Printf("[SEEKER] -> Tails! Seeking procedure will be skipped")
+		}
+
 	}
 
 }

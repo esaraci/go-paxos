@@ -6,9 +6,9 @@ manual_mode   : true
 timeout       : 2
 seek_active   : true
 seek_timeout  : 30
-wait_before_automatic_request: 3
 pr_proposals  : 0.5
 pr_nodes      : 0.25
+wait_before_automatic_request: 0
 quorum        : 0
 number_of_tids: 5
 nodes:
@@ -18,4 +18,4 @@ nodes:
   - http://46.101.141.5:2222
   - http://142.93.165.135:2222
 controller_port: 2221
-listener_ip: 35.232.98.96
+listener_ip: http://35.232.98.96:2222
