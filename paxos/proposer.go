@@ -152,7 +152,7 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 			}
 		}
 
-		// if any response had a non empty valued proposals, then highestsPromise.V holds that value
+		// if any response had a non empty valued proposals, then highestPromise.V holds that value
 		// however i need to assign my "n" to that proposal (i.e. overwriting Pid and Seq) why? <- because mine is higher as I am inside this function
 		highestPromise.Pid = config.CONF.PID
 		highestPromise.Seq = seq
