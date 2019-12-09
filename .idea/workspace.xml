@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/proposer.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/proposer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paxos/queries/queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/queries/queries.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -252,6 +253,16 @@
       <item itemvalue="Go Build.go build node_controller.go" />
       <item itemvalue="Go Build.go build proposer.go" />
     </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand />
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />

@@ -192,6 +192,19 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 					turnID, incrementedSeq, proposedV)
 			}
 		} else {
+			if agreements == 0 {
+				log.Printf("[PROPOSER] -> Trying to save proposal to DB anyway.")
+				err = queries.SetProposalToFinish(turnID, seq, proposedV)
+				if err != nil {
+					log.Printf("[PROPOSER] -> An error occurred while saving: %v.", err)
+				} else {
+					log.Printf("[PROPOSER] -> Proposal saved \"forcefully\". Notice that `agreements` and `responseCount` are now set to 1, (if they were equal to 0)")
+					agreements = 1
+					if responseCount == 0 {
+						responseCount = 1
+					}
+				}
+			}
 			log.Printf("[PROPOSER] -> Quorum has NOT been reached (%d/%d) for prepare request with proposal {turn_id: %d, seq: %d, v: %s}; the algorithm suggests: do not proceed further, progress is not possible.", agreements, len(config.CONF.NODES), turnID, seq, proposedV)
 			messageToUser += fmt.Sprintf(" Only %d responded but %d are needed for progress.", responseCount, config.CONF.QUORUM)
 		}
@@ -277,7 +290,7 @@ func countApprovals(responseBuffer chan []byte, turnID int, _ int, proposedV str
 			log.Printf("[COUNTING ACCEPTS] -> highest decline has seq = to %d, incrementing it brings it to %d", highestDecline.Seq, incrementedSeq)
 			if !config.CONF.MANUAL_MODE {
 				// if we are not in manual mode then wait a random amount of seconds to allow the other proposer(s) to finish
-				// rand.float32() generates a number between 0 and 1, adding a flat 0.2 amount
+				// rand.float64() generates a number between 0 and 1
 				// r := min + rand.Float64() * (max - min)
 				r := rand.Float64() * 5
 				time.Sleep(time.Duration(r) * time.Second)

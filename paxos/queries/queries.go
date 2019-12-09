@@ -22,25 +22,33 @@ var db *sql.DB
 
 func PrepareDBConn() {
 	db, _ = sql.Open(sqlDriver, config.CONF.DB_PATH)
-	db.Exec("PRAGMA journal_mode=WAL")
+	//_, _ = db.Exec("PRAGMA journal_mode=WAL")
 }
 
 // InitDatabase executes the command needed to initialize the database.
 func InitDatabase() {
 	_, _ = db.Exec(`BEGIN TRANSACTION;
 	CREATE TABLE IF NOT EXISTS "learnt" (
-		"turn_id"	INTEGER,
+		"turn_id"	INTEGER UNIQUE,
 		"value"	TEXT,
 		PRIMARY KEY("turn_id")
 	);
 	CREATE TABLE IF NOT EXISTS "proposal" (
-		"turn_id"	INTEGER,
+		"turn_id"	INTEGER UNIQUE,
 		"pid"	INTEGER,
 		"seq"	INTEGER,
 		"value"	TEXT,
 		PRIMARY KEY("turn_id")
 	);
 	COMMIT;`)
+}
+
+//TODO: testing queries, this is only used by proposer to prevent losing proposals,
+//      this is not required by the algorithm, but i needed to measure performances.
+
+func SetProposalToFinish(turn_id int, seq int, v string) error {
+	_, err := db.Exec("INSERT OR IGNORE INTO proposal VALUES(?, ?, ?, ?)", turn_id, config.CONF.PID, seq, v)
+	return err
 }
 
 /*
