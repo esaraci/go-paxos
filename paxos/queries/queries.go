@@ -22,6 +22,7 @@ var db *sql.DB
 
 func PrepareDBConn() {
 	db, _ = sql.Open(sqlDriver, config.CONF.DB_PATH)
+	db.Exec("PRAGMA journal_mode=WAL")
 }
 
 // InitDatabase executes the command needed to initialize the database.
