@@ -132,6 +132,9 @@ func learnFromDict(newValuesResponses *map[int]string) {
 	}
 }
 
+
+// TODO: change docs, from today 26/12/19 ComputeNewValuesRequest will return and empty "missing" field, i.e. it will only ask for new (higher) values
+// TODO: no need to perform any changes when receiving (i.e. inside ComputeNewValuesResponse) since an empty "missing" does not raise any problem
 // ComputeNewValuesRequest computes the list of turn ids needed by the askForNewValues function.
 // One component of the request is the last turn id learnt (last when sorted, i.e. the highest). The other component is a list of 'missing' turn ids.
 // The list is computed starting from 1 and going to the last id. If an element is not found in neither one of the two tables (proposal, learnt) then it's added to the list.
@@ -153,8 +156,8 @@ func ComputeNewValuesRequest() messages.NewValuesRequest {
 
 	// turn ids of the proposals
 	proposalsTurnIDs := *queries.GetProposalsTurnID()
-	missing := []int{}
 
+	missing := []int{}
 	// computing missing list
 	// starting from 1 since turn ids start from 1
 	for turnID := 1; turnID <= lastID; turnID++ {
@@ -166,8 +169,18 @@ func ComputeNewValuesRequest() messages.NewValuesRequest {
 		// if turn id is already in proposals then i dont need to look for it since askForDanglingProposals will do that.
 	}
 
+	// TODO: now 'missing' is used to send a new proposal.
+	// 'missing' are those TIDs who are not in the 'proposal' nor the 'learnt' table
+	// possibly got lost somewhere
+	for _, turnID := range missing {
+		log.Printf("[SEEKER] -> Seeking dangling proprosal with turn id %d.", turnID)
+		go SendPrepare(turnID, 1, "")
+
+	}
+
+	// TODO: Missing: missing, but from 26/12/19 this has changed and it is now just an empty slice
 	return messages.NewValuesRequest{
-		Missing: missing,
+		Missing: []int{},
 		Last:    lastID,
 	}
 }
@@ -196,6 +209,7 @@ func ComputeNewValuesResponse(newValuesRequest messages.NewValuesRequest) messag
 		}
 	}
 
+	// TODO: from 26/12/19 newValuesRequest.Missing will always be empty
 	// now toLearn contains all the values (available to me) going from [hisLast:myLast]
 	// i should now compute missing. Of course, if seekingRequest.Last was 0 i have already added to toLearn all my known values
 	// so i dont need to compute missing again.
