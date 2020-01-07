@@ -470,6 +470,19 @@ func infoHandler(w http.ResponseWriter, _ *http.Request) {
 	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s@%s@%d\" }", language, mode, config.CONF.PID)
 }
 
+
+func startSeekingForeverHandler(w http.ResponseWriter, _ *http.Request) {
+	go seek4ever()
+
+	// adding response headers
+	paxos.EnableCors(&w)
+	paxos.AddContentTypeJson(&w)
+
+	// json encoding
+	_, _ = fmt.Fprint(w, "{ \"message\": \"ok\" }")
+}
+
+
 // seek4ever triggers a seek request every x seconds. The amount of seconds can be changed in the '.yaml' file.
 // this function is only called when in AUTOMATIC mode.
 func seek4ever() {
@@ -553,6 +566,8 @@ func main() {
 	http.HandleFunc("/seeker/send_seek", sendSeekHandler)       // --> calls send seek manually
 	http.HandleFunc("/seeker/receive_seek", receiveSeekHandler) // --> calls send seek manually
 
+	http.HandleFunc("/seeker/start_seeking_forever", getAllLearntValuesHandler)
+
 	// ACCEPTOR ROUTES
 	http.HandleFunc("/acceptor/receive_prepare", receivePrepareHandler)
 	http.HandleFunc("/acceptor/receive_accept", receiveAcceptHandler)
@@ -561,6 +576,8 @@ func main() {
 	http.HandleFunc("/learner/receive_learn", receiveLearnHandler)
 	http.HandleFunc("/learner/get_learnt_value", getLearntValueHandler)          // --> redundant, clone of /learner/get_learnt_value
 	http.HandleFunc("/learner/get_all_learnt_values", getAllLearntValuesHandler) // --> redundant, clone of /learner/get_all_learnt_values
+
+
 
 	if !config.CONF.MANUAL_MODE {
 		log.Printf("[MAIN] -> Automatic Mode is activated for this node. Timeouts: Prepare -(%ds)-> Accept -(%ds)-> Learn.", config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST, config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST)
