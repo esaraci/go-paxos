@@ -566,7 +566,7 @@ func main() {
 	http.HandleFunc("/seeker/send_seek", sendSeekHandler)       // --> calls send seek manually
 	http.HandleFunc("/seeker/receive_seek", receiveSeekHandler) // --> calls send seek manually
 
-	http.HandleFunc("/seeker/start_seeking_forever", getAllLearntValuesHandler)
+	http.HandleFunc("/seeker/start_seeking_forever", startSeekingForeverHandler)
 
 	// ACCEPTOR ROUTES
 	http.HandleFunc("/acceptor/receive_prepare", receivePrepareHandler)
