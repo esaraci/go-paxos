@@ -14,5 +14,7 @@
 # Compiled go files
 release.zip
 release.tar.gz
+main
+node_controller
 *.db
 todo.go

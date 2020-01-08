@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/doc/gopher/frontpage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/doc/share.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/lib/godoc/godocs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/lib/godoc/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/lib/godoc/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/config/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/messages/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/proposal/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/pkg/go-paxos/paxos/queries/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
