@@ -586,6 +586,6 @@ func main() {
 	}
 
 	log.Printf("[MAIN] -> Serving paxos on port %d.", config.CONF.PORT)
-	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(config.CONF.PORT), nil))
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+strconv.Itoa(config.CONF.PORT), nil))
 
 }
