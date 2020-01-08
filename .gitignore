@@ -11,5 +11,8 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Compiled go files
+release.zip
+release.tar.gz
 *.db
 todo.go
