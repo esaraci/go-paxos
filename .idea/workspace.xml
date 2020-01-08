@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/paxos/queries/redis-queries.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paxos/queries/sqlite-queries.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/node_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/proposer.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/proposer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/queries/queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/queries/queries.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/seeker.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/seeker.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,11 +66,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/paxos/queries" />
+      <recent name="$PROJECT_DIR$/paxos/redis-paxos" />
       <recent name="$PROJECT_DIR$/" />
       <recent name="$PROJECT_DIR$/paxos/proposal" />
       <recent name="$PROJECT_DIR$/paxos/constants" />
-      <recent name="$PROJECT_DIR$/paxos/queries" />
-      <recent name="$PROJECT_DIR$/paxos" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -292,6 +301,27 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/paxos/queries/sqlite-queries.go</url>
+          <line>300</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/paxos/queries/sqlite-queries.go</url>
+          <line>203</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/paxos/queries/sqlite-queries.go</url>
+          <line>371</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>

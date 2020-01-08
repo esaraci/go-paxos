@@ -21,20 +21,22 @@ type Conf struct {
 
 	PORT int `yaml:"port"` // PORT defines the TCP port to which the web server will be listening.
 
-	MANUAL_MODE                   bool          `yaml:"manual_mode"`  // MANUAL_MODE defines whether the nodes proceed automatically through the phases or wait for user interaction.
-	TIMEOUT                       time.Duration `yaml:"timeout"`      // TIMEOUT defines the time duration (in seconds) waited by the client before assuming a node is not reachable.
-	SEEK_ACTIVE					  bool 			`yaml:"seek_active"`  // SEEK_ACTIVE defines whether seeking activities are active. When MANUAL_MODE is true, SEEK_ACTIVE will be ignored.
-	SEEK_TIMEOUT                  time.Duration `yaml:"seek_timeout"` // SEEK_TIMEOUT defines the time duration (in seconds) needed before performing new a seek request (used only when MANUAL_MODE = false).
+	MANUAL_MODE                   bool          `yaml:"manual_mode"`                   // MANUAL_MODE defines whether the nodes proceed automatically through the phases or wait for user interaction.
+	TIMEOUT                       time.Duration `yaml:"timeout"`                       // TIMEOUT defines the time duration (in seconds) waited by the client before assuming a node is not reachable.
+	SEEK_ACTIVE                   bool          `yaml:"seek_active"`                   // SEEK_ACTIVE defines whether seeking activities are active. When MANUAL_MODE is true, SEEK_ACTIVE will be ignored.
+	SEEK_TIMEOUT                  time.Duration `yaml:"seek_timeout"`                  // SEEK_TIMEOUT defines the time duration (in seconds) needed before performing new a seek request (used only when MANUAL_MODE = false).
 	WAIT_BEFORE_AUTOMATIC_REQUEST time.Duration `yaml:"wait_before_automatic_request"` // WAIT_BEFORE_AUTOMATIC_REQUEST defines the time duration (in seconds) waited by the proposer before sending and accept request of a learn_request when in AUTOMATIC_MODE
 
-	PR_PROPOSALS				  float64		`yaml:"pr_proposals"` // PR_PROPOSALS defines the probability of removing a proposal from the dangling proposals list. It's used by the seeker to reduce the amount of requests
-	PR_NODES					  float64		`yaml:"pr_nodes"`	  // PR_NODES defines the probability to choose a node towards which to perform a seek request
+	PR_PROPOSALS float64 `yaml:"pr_proposals"` // PR_PROPOSALS defines the probability of removing a proposal from the dangling proposals list. It's used by the seeker to reduce the amount of requests
+	PR_NODES     float64 `yaml:"pr_nodes"`     // PR_NODES defines the probability to choose a node towards which to perform a seek request
 
-	NODES []string `yaml:"nodes"` // NODES defines the list of the paxos nodes of the system.
-	QUORUM int `yaml:"quorum"` // QUORUM defines the number of positive responses needed for the algorithm to proceed. It's computed at execution time, but can be provided explicitly.
+	NODES  []string `yaml:"nodes"`  // NODES defines the list of the paxos nodes of the system.
+	QUORUM int      `yaml:"quorum"` // QUORUM defines the number of positive responses needed for the algorithm to proceed. It's computed at execution time, but can be provided explicitly.
 
-	NUMBER_OF_TIDS			      int			`yaml:"number_of_tids"`
-	LISTENER_IP					  string 		`yaml:"listener_ip"`
+	NUMBER_OF_TIDS int    `yaml:"number_of_tids"`
+	LISTENER_IP    string `yaml:"listener_ip"`
+
+	DB_TYPE    string `yaml:"db_type"`
 }
 
 // LoadConfigFile loads the config '.yaml' file onto the callee Conf object.

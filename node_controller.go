@@ -158,7 +158,6 @@ func updateServiceHandler(w http.ResponseWriter, r *http.Request) {
 	_, _ = fmt.Fprintf(w, "{ \"message\": \"%s\" }", status)
 }
 
-
 // backdoorServiceHandler is used when testing to allow for an easier way to update the yaml config or the client
 // i.e. i do not need to push a tagged version on github.
 func backdoorServiceHandler(w http.ResponseWriter, r *http.Request) {
@@ -166,7 +165,7 @@ func backdoorServiceHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.Form.Get("url")
 	out := r.Form.Get("out")
 
-	err := exec.Command("wget","-q", url, "-O", out).Run()
+	err := exec.Command("wget", "-q", url, "-O", out).Run()
 	if err != nil {
 		log.Printf("Errore nello scaricare il file: %v", err.Error())
 	}

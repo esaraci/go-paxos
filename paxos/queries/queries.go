@@ -2,53 +2,23 @@
 package queries
 
 import (
-	"database/sql"
-	"fmt"
-	_ "github.com/mattn/go-sqlite3" // blank import because of no explicit use, only side effects needed.
 	"go-paxos/paxos/config"
 	"go-paxos/paxos/messages"
 	"go-paxos/paxos/proposal"
-	"log"
-	"net/http"
-	"os"
-	"time"
 )
 
-const (
-	sqlDriver = "sqlite3"
-)
-
-var db *sql.DB
-
+// PrepareDBConn initializes the DB
 func PrepareDBConn() {
-	db, _ = sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, _ = db.Exec("PRAGMA journal_mode=WAL")
+	if config.CONF.DB_TYPE == "sqlite" {
+		SQLitePrepareDBConn()
+	} else {
+		RedisPrepareDBConn()
+	}
 }
 
-// InitDatabase executes the command needed to initialize the database.
+// InitDatabase creates tables and columns. Only used for SQLite
 func InitDatabase() {
-	_, _ = db.Exec(`BEGIN TRANSACTION;
-	CREATE TABLE IF NOT EXISTS "learnt" (
-		"turn_id"	INTEGER UNIQUE,
-		"value"	TEXT,
-		PRIMARY KEY("turn_id")
-	);
-	CREATE TABLE IF NOT EXISTS "proposal" (
-		"turn_id"	INTEGER UNIQUE,
-		"pid"	INTEGER,
-		"seq"	INTEGER,
-		"value"	TEXT,
-		PRIMARY KEY("turn_id")
-	);
-	COMMIT;`)
-}
-
-//TODO: testing queries, this is only used by proposer to prevent losing proposals,
-//      this is not required by the algorithm, but i needed to measure performances.
-
-func SetProposalToFinish(turn_id int, seq int, v string) error {
-	_, err := db.Exec("INSERT OR IGNORE INTO proposal VALUES(?, ?, ?, ?)", turn_id, config.CONF.PID, seq, v)
-	return err
+	SQLiteInitDatabase()
 }
 
 /*
@@ -65,164 +35,70 @@ func SetProposalToFinish(turn_id int, seq int, v string) error {
 // If the field 'v' is NULL, @v will be assigned the empty string "".
 // The entry will be mapped onto a proposal.Proposal object.
 func GetProposal(turnID int) (proposal.Proposal, bool) {
-
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	row := db.QueryRow("SELECT pid, seq, value FROM proposal WHERE turn_id = ?", turnID)
-
-	// sql.NullInt64, sql.NullString are "NULL-accepting" types
-	var pid sql.NullInt64
-	var seq sql.NullInt64
-	var v sql.NullString
-
-	err := row.Scan(&pid, &seq, &v)
-	if err != nil {
-		// sql.ErrNoRows
-		log.Printf("[QUERIES] -> No proposal found for turn id: %d; returning an empty proposal.", turnID)
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetProposal(turnID)
+	} else {
+		return RedisGetProposal(turnID)
 	}
-
-	ok := false
-	p := proposal.Proposal{}
-
-	if pid.Valid && seq.Valid {
-		// both pid and seq are not 0
-		ok = true
-		p = proposal.Proposal{Pid: int(pid.Int64), Seq: int(seq.Int64), V: v.String}
-	}
-
-	// if saved proposal is invalid then p is empty and ok is false
-	// otherwise p is the saved proposal and ok is true
-	return p, ok
 }
 
 // GetAllProposals returns a list of all the entries stored in the 'proposal' table.
 // Each entry is mapped onto a messages.ProposalWithTid object.
 func GetAllProposals() []messages.ProposalWithTid {
-
-	var m []messages.ProposalWithTid
-
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := db.Query("SELECT * FROM proposal ORDER BY turn_id")
-	if err != nil {
-		log.Print("ERR rilevato in db.Query - ", err.Error())
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetAllProposals()
 	} else {
-		defer rows.Close()
-		for rows.Next() {
-
-			var turnID int
-			var pid sql.NullInt64
-			var seq sql.NullInt64
-			var v sql.NullString
-
-			err := rows.Scan(&turnID, &pid, &seq, &v)
-
-			if err != nil {
-				log.Print("Error while scanning values: ", err.Error())
-			}
-
-			p := proposal.Proposal{Pid: int(pid.Int64), Seq: int(seq.Int64), V: v.String}
-			m = append(m, messages.ProposalWithTid{TurnID: turnID, Proposal: p})
-
-		}
+		return RedisGetAllProposals()
 	}
-
-	return m
 }
 
 // SetProposal inserts/updates an entry in the 'proposal' table where the field 'turn_id' is equal to @turnID.
 // If isAcceptRequest is false, only the value "n" (i.e. Pid and Seq) will be overwritten, while "v" will be left untouched.
 // If isAcceptRequest is true, both "v" and "n" will be overwritten by the value requested.
 func SetProposal(turnID int, p proposal.Proposal, isAcceptRequest bool) (err error) {
-
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	if p.V != "" {
-		if isAcceptRequest {
-			// is accept request
-			_, err = db.Exec("INSERT INTO proposal VALUES(?, ?, ?, ?) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq, value = excluded.value", turnID, p.Pid, p.Seq, p.V)
-		} else {
-			// is prepare request with non empty V. If the stored value is not NULL it will not be overwritten.
-			// coalesce returns the first non null argument passed to it.
-			_, err = db.Exec("INSERT INTO proposal VALUES(?, ?, ?, ?) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq, value = coalesce(value, excluded.value)", turnID, p.Pid, p.Seq, p.V)
-		}
-
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteSetProposal(turnID, p, isAcceptRequest)
 	} else {
-		// this can only be a prepare request, V is always non empty in accept requests
-		// this query prevents emptystring to be saved as V
-		_, err = db.Exec("INSERT INTO proposal VALUES(?, ?, ?, NULL) ON CONFLICT (turn_id) DO UPDATE SET pid = excluded.pid, seq = excluded.seq", turnID, p.Pid, p.Seq)
-
+		return RedisSetProposal(turnID, p, isAcceptRequest)
 	}
-	return err
 }
 
 // ResetProposal deletes the entry from the 'proposal' table where the field 'turn_id' is equal to @turnID.
 func ResetProposal(turnID int) error {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := db.Exec("DELETE FROM proposal WHERE turn_id = ?", turnID)
-	return err
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteResetProposal(turnID)
+	} else {
+		return RedisResetProposal(turnID)
+	}
 }
 
 // ResetAllProposals empties the `proposal` table.
 func ResetAllProposals() error {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := db.Exec("DELETE FROM proposal")
-	return err
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteResetAllProposals()
+	} else {
+		return RedisResetAllProposals()
+	}
 }
 
 // GetProposalsTurnID is a map used as a set, the keys are the turnIDs of the proposals we know.
 // map[int]interface{} is said to be more efficient than map[int]bool, doesn't really matter.
 func GetProposalsTurnID() *map[int]bool {
-
-	proposalsTurnID := make(map[int]bool)
-
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := db.Query("SELECT turn_id FROM proposal ORDER BY turn_id ASC")
-
-
-	if err != nil {
-		log.Print("ERR rilevato in db.Query - ", err.Error())
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetProposalsTurnID()
 	} else {
-		defer rows.Close()
-		for rows.Next() {
-			var turnID int
-			err := rows.Scan(&turnID)
-			if err != nil {
-				log.Print("scanning into  turn_id failed: ", err.Error())
-			} else {
-				proposalsTurnID[turnID] = true
-			}
-
-		}
+		return RedisGetProposalsTurnID()
 	}
-	return &proposalsTurnID
 }
 
 // GetDanglingProposals returns a map of the proposals found in the 'proposal' table whose turn ID does not have an entry 'learnt' table.
 // The map uses the turn ID as the key and a Proposal object as the value.
 func GetDanglingProposals() *map[int]proposal.Proposal {
-
-	danglingProposals := make(map[int]proposal.Proposal)
-
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := db.Query("SELECT p.turn_id, p.pid, p.seq, p.value FROM proposal as p LEFT JOIN learnt as l ON p.turn_id = l.turn_id WHERE l.turn_id is NULL")
-	if err != nil {
-		log.Print("ERR rilevato in db.Query - ", err.Error())
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetDanglingProposals()
 	} else {
-		defer rows.Close()
-		for rows.Next() {
-			var turnID int
-			var pid int
-			var seq int
-			var v sql.NullString
-			err := rows.Scan(&turnID, &pid, &seq, &v)
-			if err != nil {
-				log.Print("scanning into  turn_id failed: ", err.Error())
-			} else {
-				danglingProposals[turnID] = proposal.Proposal{Pid: pid, Seq: seq, V: v.String}
-			}
-
-		}
+		return RedisGetDanglingProposals()
 	}
-
-	return &danglingProposals
 }
 
 /*
@@ -234,155 +110,68 @@ func GetDanglingProposals() *map[int]proposal.Proposal {
 // GetLearntValue returns the 'v' field of the 'learnt' table where the field 'turn_id' is equal to @turnID.
 // If no value has been learnt for the requested @turnID, an empty string is returned.
 func GetLearntValue(turnID int) string {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	row := db.QueryRow("SELECT value FROM learnt WHERE turn_id = ?", turnID)
-
-	var v sql.NullString
-	err := row.Scan(&v)
-	if err != nil {
-		// sql.ErrNoRows
-		log.Printf("[QUERIES] -> No learnt value found for turn_id: %d; keep going.", turnID)
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetLearntValue(turnID)
+	} else {
+		return RedisGetLearntValue(turnID)
 	}
-	return v.String
 }
 
 // SetLearntValue inserts/updates an entry in the 'learnt' table where the field 'turn_id' is equal to @turnID.
 // If the requested @turnID does not exist, a new entry is created.
 // If the learnt value for the requested @turnID is already present, it will be overwritten. (why?)
 func SetLearntValue(turnID int, v string) (err error) {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err = db.Exec("INSERT INTO learnt VALUES(?, ?) ON CONFLICT (turn_id) DO UPDATE SET value = excluded.value", turnID, v)
-
-	// counting how many rows in learnt table so i can notify some listener that i learnt all turn_ids
-	// it is needed for testing and benchmarking purposes
-	var howMany int
-	res := db.QueryRow("SELECT count(*) as count FROM learnt")
-	err = res.Scan(&howMany)
-	if err != nil {
-		// do nothing
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteSetLearntValue(turnID, v)
 	} else {
-		if howMany == config.CONF.NUMBER_OF_TIDS {
-			now := time.Now()
-			sec := now.Unix()
-			go func() {
-				_, err := http.Get(fmt.Sprintf("%s/timer?nid=%d&timestamp=%d&how_many=%d", config.CONF.LISTENER_IP, config.CONF.PID, sec, howMany))
-				if err != nil {
-					log.Printf("Errore nella richiesta di salvataggio del timer: %v", err.Error())
-					os.Exit(777)
-				}
-			}()
-		}
+		return RedisSetLearntValue(turnID, v)
 	}
-
-	return err
 }
 
 // ResetLearntValue deletes the entry from the 'learnt' table where the field 'turn_id' is equal to @turnID.
 func ResetLearntValue(turnID int) error {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := db.Exec("DELETE FROM learnt WHERE turn_id = ?", turnID)
-	return err
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteResetLearntValue(turnID)
+	} else {
+		return RedisResetLearntValue(turnID)
+	}
 }
 
 // ResetAllLearntValues empties the `learnt` table.
 func ResetAllLearntValues() error {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	_, err := db.Exec("DELETE FROM learnt")
-	return err
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteResetAllLearntValues()
+	} else {
+		return RedisResetAllLearntValues()
+	}
 }
 
 // GetAllLearntValues returns a list of all the entries stored in the 'learnt' table.
 // Each entry is mapped onto a LearntWithTid object.
 func GetAllLearntValues() []messages.LearntWithTid {
-
-	var m []messages.LearntWithTid
-
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := db.Query("SELECT * FROM learnt ORDER BY turn_id")
-	if err != nil {
-		log.Print("ERR rilevato in db.Query - ", err.Error())
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetAllLearntValues()
 	} else {
-		defer rows.Close()
-		for rows.Next() {
-
-			var turnID int
-			var v sql.NullString
-
-			err := rows.Scan(&turnID, &v)
-
-			if err != nil {
-				log.Print("scanning into  turn_id", err.Error())
-			}
-
-			m = append(m, messages.LearntWithTid{TurnID: turnID, Learnt: v.String})
-		}
+		return RedisGetAllLearntValues()
 	}
-	return m
 }
-
-// GetMissingTurnIDs returns a list of turnIDs that are present in the 'proposal' table but not in the 'learnt' table.
-// This function not used anymore
-/*
-func GetMissingTurnIDs() []int {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := db.Query("SELECT l.turn_id FROM learnt as l LEFT JOIN proposal as p ON l.turn_id = p.turn_id WHERE p.turn_id is NULL")
-	if err != nil {
-		log.Print("ERR rilevato in db.Query - ", err.Error())
-	}
-
-	var missing []int
-
-	defer rows.Close()
-	for rows.Next() {
-		var turnID int
-		err := rows.Scan(&turnID)
-		if err != nil {
-			log.Print("scanning into  turn_id failed: ", err.Error())
-		}
-		missing = append(missing, turnID)
-	}
-	return missing
-}
-*/
 
 // GetLastTurnID returns the highest turn ID found in the `learnt` table.
 // 0 is returned if table is empty.
 func GetLastTurnID() int {
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	row := db.QueryRow("SELECT turn_id FROM learnt ORDER BY turn_id DESC")
-
-	var lastID int
-
-	err := row.Scan(&lastID)
-	if err != nil {
-		// sql.ErrNoRows, --> problema nel nome del campo/tabella oppure problemi nella dbessione
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetLastTurnID()
+	} else {
+		return RedisGetLastTurnID()
 	}
-	return lastID
 }
 
 // GetLearntValuesTurnID is a map used as a set, the keys are the turnIDs of the learnt values.
 // map[int]interface{} is said to be more efficient than map[int]bool, doesn't really matter.
 func GetLearntValuesTurnID() *map[int]bool {
-
-	learntValuesTurnID := make(map[int]bool)
-
-	//db, _ := sql.Open(sqlDriver, config.CONF.DB_PATH)
-	rows, err := db.Query("SELECT turn_id FROM learnt ORDER BY turn_id ASC")
-
-	if err != nil {
-		log.Print("ERR rilevato in db.Query - ", err.Error())
+	if config.CONF.DB_TYPE == "sqlite" {
+		return SQLiteGetLearntValuesTurnID()
 	} else {
-		defer rows.Close()
-		for rows.Next() {
-			var TurnID int
-			err := rows.Scan(&TurnID)
-			if err != nil {
-				log.Print("scanning into turn_id failed: ", err.Error())
-			} else {
-				learntValuesTurnID[TurnID] = true
-			}
-
-		}
+		return RedisGetLearntValuesTurnID()
 	}
-	return &learntValuesTurnID
 }

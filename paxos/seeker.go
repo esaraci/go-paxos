@@ -132,7 +132,6 @@ func learnFromDict(newValuesResponses *map[int]string) {
 	}
 }
 
-
 // TODO: change docs, from today 26/12/19 ComputeNewValuesRequest will return and empty "missing" field, i.e. it will only ask for new (higher) values
 // TODO: no need to perform any changes when receiving (i.e. inside ComputeNewValuesResponse) since an empty "missing" does not raise any problem
 // ComputeNewValuesRequest computes the list of turn ids needed by the askForNewValues function.

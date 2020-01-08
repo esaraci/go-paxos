@@ -60,7 +60,6 @@ func learnAndFlood(responseMessage messages.GenericMessage) {
 			go SendLearn(turnID, proposedV)
 		}
 
-
 	} else {
 		if currentV != proposedV {
 			// this is supposed to be deadcode in production
@@ -192,8 +191,11 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 					turnID, incrementedSeq, proposedV)
 			}
 		} else {
+			/* this is not needed anymore since when the new seeker was introduced
 			if agreements == 0 {
+
 				log.Printf("[PROPOSER] -> Trying to save proposal to DB anyway.")
+
 				err = queries.SetProposalToFinish(turnID, seq, proposedV)
 				if err != nil {
 					log.Printf("[PROPOSER] -> An error occurred while saving: %v.", err)
@@ -204,7 +206,7 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 						responseCount = 1
 					}
 				}
-			}
+			}*/
 			log.Printf("[PROPOSER] -> Quorum has NOT been reached (%d/%d) for prepare request with proposal {turn_id: %d, seq: %d, v: %s}; the algorithm suggests: do not proceed further, progress is not possible.", agreements, len(config.CONF.NODES), turnID, seq, proposedV)
 			messageToUser += fmt.Sprintf(" Only %d responded but %d are needed for progress.", responseCount, config.CONF.QUORUM)
 		}
