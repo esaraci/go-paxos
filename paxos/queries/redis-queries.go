@@ -3,7 +3,7 @@ package queries
 
 import (
 	"fmt"
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 	"go-paxos/paxos/config"
 	"go-paxos/paxos/messages"
 	"go-paxos/paxos/proposal"
