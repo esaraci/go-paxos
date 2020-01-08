@@ -20,7 +20,7 @@ deploy:
   on:
     tags: true
 
-script: make release
+script: make build
 
 
 notifications:

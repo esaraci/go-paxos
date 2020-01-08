@@ -12,12 +12,12 @@ wait_before_automatic_request: 0
 quorum        : 0
 number_of_tids: 5
 nodes:
-  - http://35.222.255.1:2222
+  - http://localhost:2222
   - http://35.222.232.57:2222
   - http://35.222.123.35:2222
   - http://46.101.141.5:2222
   - http://142.93.165.135:2222
 controller_port: 2221
 listener_ip: http://35.232.98.96:2222
-db_type: sqlite
+db_type: redis
 redis_port: 6379

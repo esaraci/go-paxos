@@ -147,12 +147,15 @@ func RedisSetProposal(turnID int, p proposal.Proposal, isAcceptRequest bool) (er
 	} else {
 		// is prepare request with non empty V. If the stored value is not NULL it will not be overwritten.
 		err := client.Watch(func(tx *redis.Tx) error {
-			proposalString := tx.Get(rKey).Val()
-			_, currentP := proposalStringToProposal(proposalString)
+			proposalString, err := tx.Get(rKey).Result()
 
-			if currentP.V != "" {
-				// se il V attuale non è nullo, non lo sovrascrivo (i.e. lo sovrascrivo con se stesso)
-				p.V = currentP.V
+			// if the proposal actually exists
+			if proposalString != "" {
+				_, currentP := proposalStringToProposal(proposalString)
+				if currentP.V != "" {
+					// se il V attuale non è nullo, non lo sovrascrivo (i.e. lo sovrascrivo con se stesso)
+					p.V = currentP.V
+				}
 			}
 
 			rVal := fmt.Sprintf("%d:%d:%d:%s", turnID, p.Pid, p.Seq, p.V)
