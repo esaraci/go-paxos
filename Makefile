@@ -10,7 +10,7 @@ release: build
 doc:
 	rm -rf Docs
 	godoc -http=:6060 &
-	sleep 1
+	sleep 2s
 	wget -r -np -N -E -p -k http://localhost:6060/pkg/go-paxos/
 	pkill -f "godoc -http=:6060"
 	mv localhost:6060 Docs

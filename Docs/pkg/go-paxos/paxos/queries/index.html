@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>queries - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.12.4";</script>
+<script src="../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="http://localhost:6060/pkg/">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package queries
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "go-paxos/paxos/queries"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package queries implements all the queries needed by this specific implementation of the Paxos algorithm.
+</p>
+<p>
+Package queries implements all the queries needed by this specific implementation of the Paxos algorithm.
+</p>
+<p>
+Package queries implements all the queries needed by this specific implementation of the Paxos algorithm.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#GetAllLearntValues">func GetAllLearntValues() []messages.LearntWithTid</a></dd>
+			
+				
+				<dd><a href="index.html#GetAllProposals">func GetAllProposals() []messages.ProposalWithTid</a></dd>
+			
+				
+				<dd><a href="index.html#GetDanglingProposals">func GetDanglingProposals() *map[int]proposal.Proposal</a></dd>
+			
+				
+				<dd><a href="index.html#GetLastTurnID">func GetLastTurnID() int</a></dd>
+			
+				
+				<dd><a href="index.html#GetLearntValue">func GetLearntValue(turnID int) string</a></dd>
+			
+				
+				<dd><a href="index.html#GetLearntValuesTurnID">func GetLearntValuesTurnID() *map[int]bool</a></dd>
+			
+				
+				<dd><a href="index.html#GetProposal">func GetProposal(turnID int) (proposal.Proposal, bool)</a></dd>
+			
+				
+				<dd><a href="index.html#GetProposalsTurnID">func GetProposalsTurnID() *map[int]bool</a></dd>
+			
+				
+				<dd><a href="index.html#InitDatabase">func InitDatabase()</a></dd>
+			
+				
+				<dd><a href="index.html#PrepareDBConn">func PrepareDBConn()</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetAllLearntValues">func RedisGetAllLearntValues() []messages.LearntWithTid</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetAllProposals">func RedisGetAllProposals() []messages.ProposalWithTid</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetDanglingProposals">func RedisGetDanglingProposals() *map[int]proposal.Proposal</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetLastTurnID">func RedisGetLastTurnID() int</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetLearntValue">func RedisGetLearntValue(turnID int) string</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetLearntValuesTurnID">func RedisGetLearntValuesTurnID() *map[int]bool</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetProposal">func RedisGetProposal(turnID int) (proposal.Proposal, bool)</a></dd>
+			
+				
+				<dd><a href="index.html#RedisGetProposalsTurnID">func RedisGetProposalsTurnID() *map[int]bool</a></dd>
+			
+				
+				<dd><a href="index.html#RedisPrepareDBConn">func RedisPrepareDBConn()</a></dd>
+			
+				
+				<dd><a href="index.html#RedisResetAllLearntValues">func RedisResetAllLearntValues() error</a></dd>
+			
+				
+				<dd><a href="index.html#RedisResetAllProposals">func RedisResetAllProposals() error</a></dd>
+			
+				
+				<dd><a href="index.html#RedisResetLearntValue">func RedisResetLearntValue(turnID int) error</a></dd>
+			
+				
+				<dd><a href="index.html#RedisResetProposal">func RedisResetProposal(turnID int) error</a></dd>
+			
+				
+				<dd><a href="index.html#RedisSetLearntValue">func RedisSetLearntValue(turnID int, v string) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#RedisSetProposal">func RedisSetProposal(turnID int, p proposal.Proposal, isAcceptRequest bool) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#ResetAllLearntValues">func ResetAllLearntValues() error</a></dd>
+			
+				
+				<dd><a href="index.html#ResetAllProposals">func ResetAllProposals() error</a></dd>
+			
+				
+				<dd><a href="index.html#ResetLearntValue">func ResetLearntValue(turnID int) error</a></dd>
+			
+				
+				<dd><a href="index.html#ResetProposal">func ResetProposal(turnID int) error</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetAllLearntValues">func SQLiteGetAllLearntValues() []messages.LearntWithTid</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetAllProposals">func SQLiteGetAllProposals() []messages.ProposalWithTid</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetDanglingProposals">func SQLiteGetDanglingProposals() *map[int]proposal.Proposal</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetLastTurnID">func SQLiteGetLastTurnID() int</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetLearntValue">func SQLiteGetLearntValue(turnID int) string</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetLearntValuesTurnID">func SQLiteGetLearntValuesTurnID() *map[int]bool</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetProposal">func SQLiteGetProposal(turnID int) (proposal.Proposal, bool)</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteGetProposalsTurnID">func SQLiteGetProposalsTurnID() *map[int]bool</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteInitDatabase">func SQLiteInitDatabase()</a></dd>
+			
+				
+				<dd><a href="index.html#SQLitePrepareDBConn">func SQLitePrepareDBConn()</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteResetAllLearntValues">func SQLiteResetAllLearntValues() error</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteResetAllProposals">func SQLiteResetAllProposals() error</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteResetLearntValue">func SQLiteResetLearntValue(turnID int) error</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteResetProposal">func SQLiteResetProposal(turnID int) error</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteSetLearntValue">func SQLiteSetLearntValue(turnID int, v string) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#SQLiteSetProposal">func SQLiteSetProposal(turnID int, p proposal.Proposal, isAcceptRequest bool) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#SetLearntValue">func SetLearntValue(turnID int, v string) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#SetProposal">func SetProposal(turnID int, p proposal.Proposal, isAcceptRequest bool) (err error)</a></dd>
+			
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/go-paxos/paxos/queries/mariadb-queries.go">mariadb-queries.go</a>
+			
+				<a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go">queries.go</a>
+			
+				<a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go">redis-queries.go</a>
+			
+				<a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go">sqlite-queries.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="GetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=5270:5320#L141">GetAllLearntValues</a>
+				<a class="permalink" href="index.html#GetAllLearntValues">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetAllLearntValues() []<a href="../messages/index.html">messages</a>.<a href="../messages/index.html#LearntWithTid">LearntWithTid</a></pre>
+			<p>
+GetAllLearntValues returns a list of all the entries stored in the &#39;learnt&#39; table.
+Each entry is mapped onto a LearntWithTid object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=1614:1663#L37">GetAllProposals</a>
+				<a class="permalink" href="index.html#GetAllProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetAllProposals() []<a href="../messages/index.html">messages</a>.<a href="../messages/index.html#ProposalWithTid">ProposalWithTid</a></pre>
+			<p>
+GetAllProposals returns a list of all the entries stored in the &#39;proposal&#39; table.
+Each entry is mapped onto a messages.ProposalWithTid object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetDanglingProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=3414:3468#L86">GetDanglingProposals</a>
+				<a class="permalink" href="index.html#GetDanglingProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetDanglingProposals() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a></pre>
+			<p>
+GetDanglingProposals returns a map of the proposals found in the &#39;proposal&#39; table whose turn ID does not have an entry &#39;learnt&#39; table.
+The map uses the turn ID as the key and a Proposal object as the value.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLastTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=5558:5582#L151">GetLastTurnID</a>
+				<a class="permalink" href="index.html#GetLastTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLastTurnID() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+			<p>
+GetLastTurnID returns the highest turn ID found in the `learnt` table.
+0 is returned if table is empty.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=3989:4027#L102">GetLearntValue</a>
+				<a class="permalink" href="index.html#GetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetLearntValue returns the &#39;v&#39; field of the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If no value has been learnt for the requested @turnID, an empty string is returned.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLearntValuesTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=5890:5932#L161">GetLearntValuesTurnID</a>
+				<a class="permalink" href="index.html#GetLearntValuesTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLearntValuesTurnID() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+GetLearntValuesTurnID is a map used as a set, the keys are the turnIDs of the learnt values.
+map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t really matter.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=1285:1339#L27">GetProposal</a>
+				<a class="permalink" href="index.html#GetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+GetProposal returns the entry of the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If the wanted proposal does not exist OR is not valid (i.e. pid and seq are 0)
+an empty proposal is returned together with a false boolean value.
+Please note that proposals with @pid or @seq = 0 should not exist, the user should not issue such values.
+If the wanted proposal exists AND is valid, it will be returned together with a positive boolean value.
+If the field &#39;v&#39; is NULL, @v will be assigned the empty string &#34;&#34;.
+The entry will be mapped onto a proposal.Proposal object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetProposalsTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=3034:3073#L76">GetProposalsTurnID</a>
+				<a class="permalink" href="index.html#GetProposalsTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetProposalsTurnID() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+GetProposalsTurnID is a map used as a set, the keys are the turnIDs of the proposals we know.
+map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t really matter.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitDatabase">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=442:461#L10">InitDatabase</a>
+				<a class="permalink" href="index.html#InitDatabase">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitDatabase()</pre>
+			<p>
+InitDatabase creates tables and columns. Only used for SQLite
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PrepareDBConn">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=253:273#L1">PrepareDBConn</a>
+				<a class="permalink" href="index.html#PrepareDBConn">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PrepareDBConn()</pre>
+			<p>
+PrepareDBConn initializes the DB
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=10743:10798#L353">RedisGetAllLearntValues</a>
+				<a class="permalink" href="index.html#RedisGetAllLearntValues">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetAllLearntValues() []<a href="../messages/index.html">messages</a>.<a href="../messages/index.html#LearntWithTid">LearntWithTid</a></pre>
+			<p>
+GetAllLearntValues returns a list of all the entries stored in the &#39;learnt&#39; table.
+Each entry is mapped onto a LearntWithTid object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=2815:2869#L91">RedisGetAllProposals</a>
+				<a class="permalink" href="index.html#RedisGetAllProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetAllProposals() []<a href="../messages/index.html">messages</a>.<a href="../messages/index.html#ProposalWithTid">ProposalWithTid</a></pre>
+			<p>
+GetAllProposals returns a list of all the entries stored in the &#39;proposal&#39; table.
+Each entry is mapped onto a messages.ProposalWithTid object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetDanglingProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=7039:7098#L229">RedisGetDanglingProposals</a>
+				<a class="permalink" href="index.html#RedisGetDanglingProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetDanglingProposals() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a></pre>
+			<p>
+GetDanglingProposals returns a map of the proposals found in the &#39;proposal&#39; table whose turn ID does not have an entry &#39;learnt&#39; table.
+The map uses the turn ID as the key and a Proposal object as the value.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetLastTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=11428:11457#L379">RedisGetLastTurnID</a>
+				<a class="permalink" href="index.html#RedisGetLastTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetLastTurnID() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+			<p>
+GetLastTurnID returns the highest turn ID found in the `learnt` table.
+0 is returned if table is empty.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=8069:8112#L261">RedisGetLearntValue</a>
+				<a class="permalink" href="index.html#RedisGetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetLearntValue returns the &#39;v&#39; field of the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If no value has been learnt for the requested @turnID, an empty string is returned.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetLearntValuesTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=11937:11984#L400">RedisGetLearntValuesTurnID</a>
+				<a class="permalink" href="index.html#RedisGetLearntValuesTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetLearntValuesTurnID() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+GetLearntValuesTurnID is a map used as a set, the keys are the turnIDs of the learnt values.
+map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t really matter.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=1904:1963#L61">RedisGetProposal</a>
+				<a class="permalink" href="index.html#RedisGetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+GetProposal returns the entry of the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If the wanted proposal does not exist OR is not valid (i.e. pid and seq are 0)
+an empty proposal is returned together with a false boolean value.
+Please note that proposals with @pid or @seq = 0 should not exist, the user should not issue such values.
+If the wanted proposal exists AND is valid, it will be returned together with a positive boolean value.
+If the field &#39;v&#39; is NULL, @v will be assigned the empty string &#34;&#34;.
+The entry will be mapped onto a proposal.Proposal object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisGetProposalsTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=6208:6252#L204">RedisGetProposalsTurnID</a>
+				<a class="permalink" href="index.html#RedisGetProposalsTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisGetProposalsTurnID() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+GetProposalsTurnID is a map used as a set, the keys are the turnIDs of the proposals we know.
+map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t really matter.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisPrepareDBConn">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=858:883#L36">RedisPrepareDBConn</a>
+				<a class="permalink" href="index.html#RedisPrepareDBConn">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisPrepareDBConn()</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="RedisResetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=10121:10159#L330">RedisResetAllLearntValues</a>
+				<a class="permalink" href="index.html#RedisResetAllLearntValues">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisResetAllLearntValues() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetAllLearntValues empties the `learnt` table.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisResetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=5502:5537#L179">RedisResetAllProposals</a>
+				<a class="permalink" href="index.html#RedisResetAllProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisResetAllProposals() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetAllProposals empties the `proposal` table.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisResetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=9798:9842#L316">RedisResetLearntValue</a>
+				<a class="permalink" href="index.html#RedisResetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisResetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetLearntValue deletes the entry from the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisResetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=5178:5219#L165">RedisResetProposal</a>
+				<a class="permalink" href="index.html#RedisResetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisResetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetProposal deletes the entry from the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisSetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=8702:8760#L278">RedisSetLearntValue</a>
+				<a class="permalink" href="index.html#RedisSetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisSetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>, v <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SetLearntValue inserts/updates an entry in the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If the requested @turnID does not exist, a new entry is created.
+If the learnt value for the requested @turnID is already present, it will be overwritten. (why?)
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RedisSetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/redis-queries.go?s=3862:3950#L123">RedisSetProposal</a>
+				<a class="permalink" href="index.html#RedisSetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RedisSetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>, p <a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a>, isAcceptRequest <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SetProposal inserts/updates an entry in the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If isAcceptRequest is false, only the value &#34;n&#34; (i.e. Pid and Seq) will be overwritten, while &#34;v&#34; will be left untouched.
+If isAcceptRequest is true, both &#34;v&#34; and &#34;n&#34; will be overwritten by the value requested.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ResetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=4966:4999#L131">ResetAllLearntValues</a>
+				<a class="permalink" href="index.html#ResetAllLearntValues">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ResetAllLearntValues() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetAllLearntValues empties the `learnt` table.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ResetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=2687:2717#L66">ResetAllProposals</a>
+				<a class="permalink" href="index.html#ResetAllProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ResetAllProposals() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetAllProposals empties the `proposal` table.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ResetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=4739:4778#L122">ResetLearntValue</a>
+				<a class="permalink" href="index.html#ResetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ResetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetLearntValue deletes the entry from the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ResetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=2470:2506#L57">ResetProposal</a>
+				<a class="permalink" href="index.html#ResetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ResetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetProposal deletes the entry from the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=9819:9875#L281">SQLiteGetAllLearntValues</a>
+				<a class="permalink" href="index.html#SQLiteGetAllLearntValues">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetAllLearntValues() []<a href="../messages/index.html">messages</a>.<a href="../messages/index.html#LearntWithTid">LearntWithTid</a></pre>
+			<p>
+GetAllLearntValues returns a list of all the entries stored in the &#39;learnt&#39; table.
+Each entry is mapped onto a LearntWithTid object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=2742:2797#L81">SQLiteGetAllProposals</a>
+				<a class="permalink" href="index.html#SQLiteGetAllProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetAllProposals() []<a href="../messages/index.html">messages</a>.<a href="../messages/index.html#ProposalWithTid">ProposalWithTid</a></pre>
+			<p>
+GetAllProposals returns a list of all the entries stored in the &#39;proposal&#39; table.
+Each entry is mapped onto a messages.ProposalWithTid object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetDanglingProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=6421:6481#L184">SQLiteGetDanglingProposals</a>
+				<a class="permalink" href="index.html#SQLiteGetDanglingProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetDanglingProposals() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a></pre>
+			<p>
+GetDanglingProposals returns a map of the proposals found in the &#39;proposal&#39; table whose turn ID does not have an entry &#39;learnt&#39; table.
+The map uses the turn ID as the key and a Proposal object as the value.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetLastTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=11243:11273#L337">SQLiteGetLastTurnID</a>
+				<a class="permalink" href="index.html#SQLiteGetLastTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetLastTurnID() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+			<p>
+GetLastTurnID returns the highest turn ID found in the `learnt` table.
+0 is returned if table is empty.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=7622:7666#L222">SQLiteGetLearntValue</a>
+				<a class="permalink" href="index.html#SQLiteGetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetLearntValue returns the &#39;v&#39; field of the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If no value has been learnt for the requested @turnID, an empty string is returned.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetLearntValuesTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=11765:11813#L352">SQLiteGetLearntValuesTurnID</a>
+				<a class="permalink" href="index.html#SQLiteGetLearntValuesTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetLearntValuesTurnID() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+GetLearntValuesTurnID is a map used as a set, the keys are the turnIDs of the learnt values.
+map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t really matter.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=1754:1814#L49">SQLiteGetProposal</a>
+				<a class="permalink" href="index.html#SQLiteGetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+GetProposal returns the entry of the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If the wanted proposal does not exist OR is not valid (i.e. pid and seq are 0)
+an empty proposal is returned together with a false boolean value.
+Please note that proposals with @pid or @seq = 0 should not exist, the user should not issue such values.
+If the wanted proposal exists AND is valid, it will be returned together with a positive boolean value.
+If the field &#39;v&#39; is NULL, @v will be assigned the empty string &#34;&#34;.
+The entry will be mapped onto a proposal.Proposal object.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteGetProposalsTurnID">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=5627:5672#L156">SQLiteGetProposalsTurnID</a>
+				<a class="permalink" href="index.html#SQLiteGetProposalsTurnID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteGetProposalsTurnID() *map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+GetProposalsTurnID is a map used as a set, the keys are the turnIDs of the proposals we know.
+map[int]interface{} is said to be more efficient than map[int]bool, doesn&#39;t really matter.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteInitDatabase">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=620:645#L19">SQLiteInitDatabase</a>
+				<a class="permalink" href="index.html#SQLiteInitDatabase">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteInitDatabase()</pre>
+			<p>
+InitDatabase executes the command needed to initialize the database.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLitePrepareDBConn">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=420:446#L12">SQLitePrepareDBConn</a>
+				<a class="permalink" href="index.html#SQLitePrepareDBConn">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLitePrepareDBConn()</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteResetAllLearntValues">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=9529:9568#L273">SQLiteResetAllLearntValues</a>
+				<a class="permalink" href="index.html#SQLiteResetAllLearntValues">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteResetAllLearntValues() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetAllLearntValues empties the `learnt` table.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteResetAllProposals">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=5286:5322#L148">SQLiteResetAllProposals</a>
+				<a class="permalink" href="index.html#SQLiteResetAllProposals">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteResetAllProposals() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetAllProposals empties the `proposal` table.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteResetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=9294:9339#L266">SQLiteResetLearntValue</a>
+				<a class="permalink" href="index.html#SQLiteResetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteResetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetLearntValue deletes the entry from the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteResetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=5053:5095#L141">SQLiteResetProposal</a>
+				<a class="permalink" href="index.html#SQLiteResetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteResetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetProposal deletes the entry from the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteSetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=8267:8326#L238">SQLiteSetLearntValue</a>
+				<a class="permalink" href="index.html#SQLiteSetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteSetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>, v <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SetLearntValue inserts/updates an entry in the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If the requested @turnID does not exist, a new entry is created.
+If the learnt value for the requested @turnID is already present, it will be overwritten. (why?)
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SQLiteSetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/sqlite-queries.go?s=3830:3919#L118">SQLiteSetProposal</a>
+				<a class="permalink" href="index.html#SQLiteSetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SQLiteSetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>, p <a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a>, isAcceptRequest <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SetProposal inserts/updates an entry in the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If isAcceptRequest is false, only the value &#34;n&#34; (i.e. Pid and Seq) will be overwritten, while &#34;v&#34; will be left untouched.
+If isAcceptRequest is true, both &#34;v&#34; and &#34;n&#34; will be overwritten by the value requested.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetLearntValue">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=4439:4492#L113">SetLearntValue</a>
+				<a class="permalink" href="index.html#SetLearntValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetLearntValue(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>, v <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SetLearntValue inserts/updates an entry in the &#39;learnt&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If the requested @turnID does not exist, a new entry is created.
+If the learnt value for the requested @turnID is already present, it will be overwritten. (why?)
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetProposal">func <a href="http://localhost:6060/src/go-paxos/paxos/queries/queries.go?s=2113:2196#L48">SetProposal</a>
+				<a class="permalink" href="index.html#SetProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetProposal(turnID <a href="http://localhost:6060/pkg/builtin/#int">int</a>, p <a href="../proposal/index.html">proposal</a>.<a href="../proposal/index.html#Proposal">Proposal</a>, isAcceptRequest <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SetProposal inserts/updates an entry in the &#39;proposal&#39; table where the field &#39;turn_id&#39; is equal to @turnID.
+If isAcceptRequest is false, only the value &#34;n&#34; (i.e. Pid and Seq) will be overwritten, while &#34;v&#34; will be left untouched.
+If isAcceptRequest is true, both &#34;v&#34; and &#34;n&#34; will be overwritten by the value requested.
+</p>
+
+			
+			
+
+		
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.12.4.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+
