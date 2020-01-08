@@ -20,7 +20,8 @@ deploy:
   on:
     tags: true
 
-script: make build
+script:
+  - env GO111MODULE=on make build
 
 
 notifications:
