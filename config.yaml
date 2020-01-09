@@ -19,5 +19,5 @@ nodes:
   - http://142.93.165.135:2222
 controller_port: 2221
 listener_ip: http://35.232.98.96:2222
-db_type: redis
+db_type: sqlite
 redis_port: 6379

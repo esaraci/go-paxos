@@ -21,7 +21,7 @@ var db *sql.DB
 
 func SQLitePrepareDBConn() {
 
-	db, _ = sql.Open(sqlDriver, config.CONF.DB_PATH)
+	db, _ = sql.Open(sqlDriver, "file:database.db?cache=shared&mode=rwc")
 	//_, _ = db.Exec("PRAGMA journal_mode=WAL")
 }
 

@@ -522,7 +522,7 @@ func init() {
 			log.Print("[ERROR] -> Could not create database. Something is wrong.")
 		} else {
 			// now i certainly have a db file.
-			queries.PrepareDBConn()
+			queries.SQLitePrepareDBConn()
 			queries.InitDatabase()
 		}
 
