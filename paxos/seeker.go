@@ -84,7 +84,7 @@ func askForDanglingProposals() {
 	for turnID, danglingProposal := range *danglingProposals {
 
 		log.Printf("[SEEKER] -> Seeking dangling proprosal with turn id %d.", turnID)
-		go SendPrepare(turnID, danglingProposal.Seq, danglingProposal.V)
+		go SendPrepare(turnID, danglingProposal.Seq, danglingProposal.V, config.CONF.OPTIMIZATION)
 
 	}
 
@@ -173,7 +173,7 @@ func ComputeNewValuesRequest() messages.NewValuesRequest {
 	// possibly got lost somewhere
 	for _, turnID := range missing {
 		log.Printf("[SEEKER] -> Seeking dangling proprosal with turn id %d.", turnID)
-		go SendPrepare(turnID, 1, "")
+		go SendPrepare(turnID, 1, "", false)
 
 	}
 

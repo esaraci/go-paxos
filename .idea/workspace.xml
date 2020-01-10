@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paxos/queries/sqlite-queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/queries/sqlite-queries.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/proposer.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/proposer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/seeker.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/seeker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paxos/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/utils.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

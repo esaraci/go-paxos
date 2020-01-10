@@ -15,7 +15,6 @@ import (
 
 // sendPartialRequest sends HTTP POST requests and saves the responses into a channel. If the target is not reachable a nil response is added to the channel.
 func sendPartialRequest(session *http.Client, url string, resBuffer chan []byte, message interface{}) {
-
 	// sending post requests
 	jsonContents, err := json.MarshalIndent(message, "", "	")
 	if err != nil {

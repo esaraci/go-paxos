@@ -161,7 +161,7 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 			time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 			log.Printf("[PROPOSER] -> Sending accept request.")
 			messageToUser += fmt.Sprintf(" Sending accept request.")
-			go SendAccept(turnID, highestPromise.Seq, highestPromise.V)
+			go SendAccept(turnID, highestPromise.Seq, highestPromise.V, config.CONF.OPTIMIZATION)
 		} else {
 			log.Printf("[PROPOSER] -> Waiting for user to send accept request; the algorithm suggests: /proposer/send_accept?turn_id=%d&seq=%d&v=%s", turnID, highestPromise.Seq, highestPromise.V)
 			messageToUser += fmt.Sprintf(" Please send an accept request as follows:"+
@@ -183,7 +183,7 @@ func countAgreements(responseBuffer chan []byte, turnID int, seq int, proposedV 
 				//time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 				log.Printf("[PROPOSER] -> Sending incremented prepare request.")
 				messageToUser += fmt.Sprintf(" Retrying with an incrememented prepare request.")
-				go SendPrepare(turnID, incrementedSeq, proposedV)
+				go SendPrepare(turnID, incrementedSeq, proposedV, config.CONF.OPTIMIZATION)
 			} else {
 				log.Printf("[PROPOSER] -> Waiting for user to retry the prepare request; the algorithm suggests: /proposer/send_prepare?turn_id=%d&seq=%d&v=%s", turnID, incrementedSeq, proposedV)
 				messageToUser += fmt.Sprintf(" Please retry with a higher prepare request as follows:"+
@@ -299,7 +299,7 @@ func countApprovals(responseBuffer chan []byte, turnID int, _ int, proposedV str
 				//time.Sleep(config.CONF.WAIT_BEFORE_AUTOMATIC_REQUEST * time.Second)
 				log.Printf("[PROPOSER] -> Sending incremented prepare requests.")
 				messageToUser += fmt.Sprintf("Retrying with an incrememented prepare request.")
-				go SendPrepare(turnID, incrementedSeq, proposedV)
+				go SendPrepare(turnID, incrementedSeq, proposedV, config.CONF.OPTIMIZATION)
 			} else {
 				log.Printf("[PROPOSER] -> Waiting for user to retry the prepare request; the algorithm suggests: /proposer/send_prepare?turn_id=%d&seq=%d&v=%s", turnID, incrementedSeq, proposedV)
 				messageToUser += fmt.Sprintf(" Please retry with a higher prepare request as follows:"+
@@ -317,11 +317,22 @@ func countApprovals(responseBuffer chan []byte, turnID int, _ int, proposedV str
 }
 
 // SendPrepare sends a prepare request to all the acceptors in the network, the values of the prepare request are to be provided by the user (except @v which can remain empty).
-func SendPrepare(turnID int, seq int, v string) (messageToUser string) {
+func SendPrepare(turnID int, seq int, v string, optimization bool) (messageToUser string) {
+
+	var NODES []string
+
+	if optimization {
+		idx := rand.Perm(len(config.CONF.NODES))
+		for i := 0; i < config.CONF.QUORUM; i++ {
+			NODES = append(NODES, config.CONF.NODES[idx[i]])
+		}
+	} else {
+		NODES = config.CONF.NODES
+	}
 
 	log.Printf("[PROPOSER] -> Starting prepare request; turn_id: %d, seq: %d, v: %s.", turnID, seq, v)
 	session := &http.Client{Timeout: time.Second * config.CONF.TIMEOUT}
-	ch := make(chan []byte, len(config.CONF.NODES))
+	ch := make(chan []byte, len(NODES))
 
 	currentV := queries.GetLearntValue(turnID)
 	if currentV != "" {
@@ -331,7 +342,7 @@ func SendPrepare(turnID int, seq int, v string) (messageToUser string) {
 
 	// send a request for each node
 	// responses are saved in ch
-	for _, node := range config.CONF.NODES {
+	for _, node := range NODES {
 		url := node + "/acceptor/receive_prepare"
 
 		// building prepare message
@@ -348,7 +359,6 @@ func SendPrepare(turnID int, seq int, v string) (messageToUser string) {
 				Learnt: "",
 			},
 		}
-
 		go sendPartialRequest(session, url, ch, prepareRequestMessage)
 	}
 
@@ -367,11 +377,23 @@ func SendPrepare(turnID int, seq int, v string) (messageToUser string) {
 // SendAccept should only be called when it is right to do so, i.e. when the prepare request was "promised" by a majority of nodes.
 // Calling this function outside the normal flow of the algorithm does not guarantee the correctness of the system.
 // Note that when the node is working in AUTOMATIC mode, this function is called automatically after reaching the quorum for the prepare request.
-func SendAccept(turnID int, seq int, v string) (messageToUser string) {
+func SendAccept(turnID int, seq int, v string, optimization bool) (messageToUser string) {
+
+	var NODES []string
+
+	if optimization {
+		idx := rand.Perm(len(config.CONF.NODES))
+		for i := 0; i < config.CONF.QUORUM; i++ {
+			NODES = append(NODES, config.CONF.NODES[idx[i]])
+		}
+	} else {
+		NODES = config.CONF.NODES
+	}
+
 
 	log.Printf("[PROPOSER] -> Starting accept request; turn_id: %d, seq: %d, v: %s.", turnID, seq, v)
 	session := &http.Client{Timeout: time.Second * config.CONF.TIMEOUT}
-	ch := make(chan []byte, len(config.CONF.NODES))
+	ch := make(chan []byte, len(NODES))
 
 	currentV := queries.GetLearntValue(turnID)
 	if currentV != "" {
@@ -381,7 +403,7 @@ func SendAccept(turnID int, seq int, v string) (messageToUser string) {
 
 	// send a request for each node
 	// responses are saved in ch
-	for _, node := range config.CONF.NODES {
+	for _, node := range NODES {
 		url := node + "/acceptor/receive_accept"
 
 		// building accept message
@@ -414,6 +436,19 @@ func SendAccept(turnID int, seq int, v string) (messageToUser string) {
 // SendLearn sends an learn request to all the acceptors in the network, the value of the learn request are the values agreed upon during the accept request.
 // Note that when the node is working in AUTOMATIC mode, this function is called automatically after reaching the quorum for the accept request.
 func SendLearn(turnID int, v string) string {
+
+	/*
+	NODES := make([]string, len(config.CONF.NODES))
+
+	if optimization {
+		idx := rand.Perm(len(config.CONF.NODES))
+		for i := 0; i < config.CONF.QUORUM; i++ {
+			NODES[i] = config.CONF.NODES[idx[i]]
+		}
+	} else {
+		NODES = config.CONF.NODES
+	}
+	*/
 
 	log.Printf("[PROPOSER] -> Starting learn request; turn_id: %d, v: %s.", turnID, v)
 	session := &http.Client{Timeout: time.Second * config.CONF.TIMEOUT}

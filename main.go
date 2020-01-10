@@ -239,7 +239,7 @@ func sendPrepareHandler(w http.ResponseWriter, r *http.Request) {
 	seq, _ := strconv.Atoi(r.Form.Get("seq"))
 	v := r.Form.Get("v")
 
-	messageToUser := paxos.SendPrepare(turnID, seq, v)
+	messageToUser := paxos.SendPrepare(turnID, seq, v, config.CONF.OPTIMIZATION)
 
 	// adding response headers
 	paxos.EnableCors(&w)
@@ -256,7 +256,7 @@ func sendAcceptHandler(w http.ResponseWriter, r *http.Request) {
 	turnID, _ := strconv.Atoi(r.Form.Get("turn_id"))
 	seq, _ := strconv.Atoi(r.Form.Get("seq"))
 	v := r.Form.Get("v")
-	messageToUser := paxos.SendAccept(turnID, seq, v)
+	messageToUser := paxos.SendAccept(turnID, seq, v, config.CONF.OPTIMIZATION)
 
 	// adding response headers
 	paxos.EnableCors(&w)

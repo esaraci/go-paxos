@@ -37,6 +37,8 @@ type Conf struct {
 	LISTENER_IP    string `yaml:"listener_ip"`
 
 	DB_TYPE    string `yaml:"db_type"`
+
+	OPTIMIZATION 	bool `yaml:"optimization"`
 }
 
 // LoadConfigFile loads the config '.yaml' file onto the callee Conf object.
