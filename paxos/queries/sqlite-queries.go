@@ -22,7 +22,7 @@ var db *sql.DB
 func SQLitePrepareDBConn() {
 
 	// _busy_timeout=5000&
-	db, _ = sql.Open(sqlDriver, "file:database.db?cache=shared&mode=rwc")
+	db, _ = sql.Open(sqlDriver, "file:database.db?_busy_timeout=5000&cache=shared&mode=rwc")
 	db.SetMaxOpenConns(1)
 	//_, _ = db.Exec("PRAGMA journal_mode=WAL")
 }
