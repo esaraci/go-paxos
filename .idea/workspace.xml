@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d4c8cf68-00f1-4048-9e8c-0b5aeae7c2bb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main" beforeDir="false" afterPath="$PROJECT_DIR$/main" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paxos/queries/mariadb-queries.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paxos/queries/sqlite-queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/paxos/queries/sqlite-queries.go" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,8 +37,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
   <component name="ProjectId" id="1TYpv8TiCyS2DHCunxAGAvJs7kk" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="sqlite" />
@@ -189,18 +193,6 @@
       </list>
     </option>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="Go Build.go build main.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="go-paxos" />
@@ -257,13 +249,15 @@
     </list>
   </component>
   <component name="ServiceViewManager">
-    <option name="allServicesViewState">
-      <serviceView>
-        <treeState>
-          <expand />
-          <select />
-        </treeState>
-      </serviceView>
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
     </option>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,6 +289,28 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="551" y="1253" width="800" height="676" key="#Inspections" timestamp="1580221591963">
+      <screen x="0" y="1080" width="1920" height="1080" />
+    </state>
+    <state x="551" y="1253" width="800" height="676" key="#Inspections/0.1080.1920.1080/0.0.1920.1080@0.1080.1920.1080" timestamp="1580221591963" />
+    <state width="1354" height="244" key="GridCell.Tab.0.bottom" timestamp="1580220511902">
+      <screen x="0" y="1080" width="1920" height="1080" />
+    </state>
+    <state width="1354" height="244" key="GridCell.Tab.0.bottom/0.1080.1920.1080/0.0.1920.1080@0.1080.1920.1080" timestamp="1580220511902" />
+    <state width="1354" height="244" key="GridCell.Tab.0.center" timestamp="1580220511902">
+      <screen x="0" y="1080" width="1920" height="1080" />
+    </state>
+    <state width="1354" height="244" key="GridCell.Tab.0.center/0.1080.1920.1080/0.0.1920.1080@0.1080.1920.1080" timestamp="1580220511902" />
+    <state width="1354" height="244" key="GridCell.Tab.0.left" timestamp="1580220511902">
+      <screen x="0" y="1080" width="1920" height="1080" />
+    </state>
+    <state width="1354" height="244" key="GridCell.Tab.0.left/0.1080.1920.1080/0.0.1920.1080@0.1080.1920.1080" timestamp="1580220511902" />
+    <state width="1354" height="244" key="GridCell.Tab.0.right" timestamp="1580220511902">
+      <screen x="0" y="1080" width="1920" height="1080" />
+    </state>
+    <state width="1354" height="244" key="GridCell.Tab.0.right/0.1080.1920.1080/0.0.1920.1080@0.1080.1920.1080" timestamp="1580220511902" />
   </component>
   <component name="masterDetails">
     <states>
